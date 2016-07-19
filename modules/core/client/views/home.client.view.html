@@ -1,0 +1,20 @@
+<section ng-controller="HomeController">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+    <img alt="" class="img-responsive text-center" ng-src="modules/core/client/img/brand/logo.png" />
+    </div>
+  </div>
+  <br>
+  <div><a ui-sref="information.list">Thông tin vườn rau</a></div></div>
+  <div><a ui-sref="articles.list">Blog chia sẻ kinh nghiệm nhà nông</a></div></div>
+  <div>
+    <ul data-ng-hide="isLoged">
+      <li>
+        <em> <a ui-sref="authentication.signin">Đăng nhập </a></em> để sử dụng đầy đủ tính năng!
+      </li>
+      <li>
+        <em> <a ui-sref="authentication.signup">Đăng ký </a></em> nếu chưa có tài khoản.
+      </li>
+    </ul>
+  </div>
+</section>

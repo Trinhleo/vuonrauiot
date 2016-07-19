@@ -1,0 +1,12 @@
+<section>
+  <div class="page-header">
+    <h1 data-ng-bind="vm.information.name"></h1>
+  </div>
+  <small>
+    <em class="text-muted">
+      Cập nhật vào
+      <span data-ng-bind="vm.information.created | date:'mediumDate'"></span>
+      </em>
+  </small>
+  <p class="lead" data-ng-bind="vm.information.content"></p>
+</section>

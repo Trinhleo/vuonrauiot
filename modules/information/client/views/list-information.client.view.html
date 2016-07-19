@@ -1,0 +1,21 @@
+<section>
+  <div class="page-header">
+    <h1>Thông tin rau quả</h1>
+    <div class="col-md-4" style="margin-top: 2em">
+    <input class="form-control col-md-4" type="text" ng-model="search" placeholder="Tìm kiếm" ng-change="figureOutItemsToDisplay()" />
+    </div>
+    <a data-ng-repeat="information in vm.information"
+    data-ui-sref="information.view({ informationId: information._id })"
+    class="list-group-item">
+    <small class="list-group-item-text">
+      Cập nhật vào
+      <span data-ng-bind="information.created | date:'mediumDate'"></span>
+    </small>
+    <h4 class="list-group-item-heading" data-ng-bind="information.name"></h4>
+  </a>
+</div>
+<div class="alert alert-warning text-center" data-ng-if="vm.information.$resolved && !vm.information.length">
+  Không có dữ liệu!
+</div>
+<pagination boundary-links="true" max-size="8" items-per-page="itemsPerPage" total-items="filterLength" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+</section>
