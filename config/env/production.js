@@ -10,8 +10,8 @@ module.exports = {
   db: {
     uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://admin:admin@ds011432.mlab.com:11432/vuonrau',
     options: {
-      user: '',
-      pass: ''
+      user: 'admin',
+      pass: 'admin'
     },
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false
