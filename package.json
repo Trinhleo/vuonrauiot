@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "postinstall": "bower install --config.interactive=false && gulp prod"
+    "postinstall": "bower install --config.interactive=false && gulp default"
   },
   "dependencies": {
     "acl": "~0.4.4",
