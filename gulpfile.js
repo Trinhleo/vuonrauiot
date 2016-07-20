@@ -21,9 +21,9 @@ var _ = require('lodash'),
   webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 
 // Set NODE_ENV to 'test'
-// gulp.task('env:test', function () {
-//   process.env.NODE_ENV = 'test';
-// });
+gulp.task('env:test', function () {
+  process.env.NODE_ENV = 'test';
+});
 
 // Set NODE_ENV to 'development'
 gulp.task('env:dev', function () {
@@ -137,26 +137,26 @@ gulp.task('cssmin', function () {
 });
 
 // Sass task
-// gulp.task('sass', function () {
-//   return gulp.src(defaultAssets.client.sass)
-//     .pipe(plugins.sass())
-//     .pipe(plugins.autoprefixer())
-//     .pipe(plugins.rename(function (file) {
-//       file.dirname = file.dirname.replace(path.sep + 'scss', path.sep + 'css');
-//     }))
-//     .pipe(gulp.dest('./modules/'));
-// });
+gulp.task('sass', function () {
+  return gulp.src(defaultAssets.client.sass)
+    .pipe(plugins.sass())
+    .pipe(plugins.autoprefixer())
+    .pipe(plugins.rename(function (file) {
+      file.dirname = file.dirname.replace(path.sep + 'scss', path.sep + 'css');
+    }))
+    .pipe(gulp.dest('./modules/'));
+});
 
 // Less task
-// gulp.task('less', function () {
-//   return gulp.src(defaultAssets.client.less)
-//     .pipe(plugins.less())
-//     .pipe(plugins.autoprefixer())
-//     .pipe(plugins.rename(function (file) {
-//       file.dirname = file.dirname.replace(path.sep + 'less', path.sep + 'css');
-//     }))
-//     .pipe(gulp.dest('./modules/'));
-// });
+gulp.task('less', function () {
+  return gulp.src(defaultAssets.client.less)
+    .pipe(plugins.less())
+    .pipe(plugins.autoprefixer())
+    .pipe(plugins.rename(function (file) {
+      file.dirname = file.dirname.replace(path.sep + 'less', path.sep + 'css');
+    }))
+    .pipe(gulp.dest('./modules/'));
+});
 
 // Angular template cache task
 gulp.task('templatecache', function () {
@@ -206,31 +206,31 @@ gulp.task('mocha', function (done) {
 });
 
 // Karma test runner task
-// gulp.task('karma', function (done) {
-//   return gulp.src([])
-//     .pipe(plugins.karma({
-//       configFile: 'karma.conf.js',
-//       action: 'run',
-//       singleRun: true
-//     }));
-// });
+gulp.task('karma', function (done) {
+  return gulp.src([])
+    .pipe(plugins.karma({
+      configFile: 'karma.conf.js',
+      action: 'run',
+      singleRun: true
+    }));
+});
 
 // Drops the MongoDB database, used in e2e testing
-// gulp.task('dropdb', function (done) {
-//   // Use mongoose configuration
-//   var mongoose = require('./config/lib/mongoose.js');
-//
-//   mongoose.connect(function (db) {
-//     db.connection.db.dropDatabase(function (err) {
-//       if(err) {
-//         console.log(err);
-//       } else {
-//         console.log('Successfully dropped db: ', db.connection.db.databaseName);
-//       }
-//       db.connection.db.close(done);
-//     });
-//   });
-// });
+gulp.task('dropdb', function (done) {
+  // Use mongoose configuration
+  var mongoose = require('./config/lib/mongoose.js');
+
+  mongoose.connect(function (db) {
+    db.connection.db.dropDatabase(function (err) {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log('Successfully dropped db: ', db.connection.db.databaseName);
+      }
+      db.connection.db.close(done);
+    });
+  });
+});
 
 // Downloads the selenium webdriver
 gulp.task('webdriver_update', webdriver_update);
@@ -241,21 +241,21 @@ gulp.task('webdriver_update', webdriver_update);
 gulp.task('webdriver_standalone', webdriver_standalone);
 
 // Protractor test runner task
-// gulp.task('protractor', ['webdriver_update'], function () {
-//   gulp.src([])
-//     .pipe(protractor({
-//       configFile: 'protractor.conf.js'
-//     }))
-//     .on('end', function() {
-//       console.log('E2E Testing complete');
-//       // exit with success.
-//       process.exit(0);
-//     })
-//     .on('error', function(err) {
-//       console.log('E2E Tests failed');
-//       process.exit(1);
-//     });
-// });
+gulp.task('protractor', ['webdriver_update'], function () {
+  gulp.src([])
+    .pipe(protractor({
+      configFile: 'protractor.conf.js'
+    }))
+    .on('end', function() {
+      console.log('E2E Testing complete');
+      // exit with success.
+      process.exit(0);
+    })
+    .on('error', function(err) {
+      console.log('E2E Tests failed');
+      process.exit(1);
+    });
+});
 
 // Lint CSS and JavaScript files.
 gulp.task('lint', function (done) {
@@ -268,21 +268,21 @@ gulp.task('build', function (done) {
 });
 
 // Run the project tests
-// gulp.task('test', function (done) {
-//   runSequence('env:test', 'lint', 'mocha', 'karma', 'nodemon', 'protractor', done);
-// });
+gulp.task('test', function (done) {
+  runSequence('env:test', 'lint', 'mocha', 'karma', 'nodemon', 'protractor', done);
+});
 
-// gulp.task('test:server', function (done) {
-//   runSequence('env:test', 'lint', 'mocha', done);
-// });
-//
-// gulp.task('test:client', function (done) {
-//   runSequence('env:test', 'lint', 'karma', done);
-// });
-//
-// gulp.task('test:e2e', function (done) {
-//   runSequence('env:test', 'lint', 'dropdb', 'nodemon', 'protractor', done);
-// });
+gulp.task('test:server', function (done) {
+  runSequence('env:test', 'lint', 'mocha', done);
+});
+
+gulp.task('test:client', function (done) {
+  runSequence('env:test', 'lint', 'karma', done);
+});
+
+gulp.task('test:e2e', function (done) {
+  runSequence('env:test', 'lint', 'dropdb', 'nodemon', 'protractor', done);
+});
 //
 // Run the project in development mode
 gulp.task('heroku', function (done) {
