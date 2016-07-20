@@ -284,10 +284,12 @@ gulp.task('test:e2e', function (done) {
   runSequence('env:test', 'lint', 'dropdb', 'nodemon', 'protractor', done);
 });
 //
-// Run the project in development mode
-gulp.task('heroku', function (done) {
-  runSequence('templatecache', 'build', 'env:prod',['nodemon', 'watch'], done);
-});gulp.task('default', function (done) {
+// Run the project in eroku
+// gulp.task('heroku', function (done) {
+//   runSequence('env:prod', done);
+// });
+gulp.task('heroku:production', ['public','less', 'jade', 'js']);
+gulp.task('default', function (done) {
   runSequence('env:dev',['nodemon', 'watch'], done);
 });
 
