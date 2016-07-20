@@ -288,8 +288,8 @@ gulp.task('test:e2e', function (done) {
 // gulp.task('heroku', function (done) {
 //   runSequence('env:prod', done);
 // });
-gulp.tasks('heroku', function (done) {
-  runSequence('templatecache', 'build', 'env:prod',['nodemon', 'watch'], done);});
+// gulp.tasks('heroku', function (done) {
+//   runSequence('templatecache', 'build', 'env:prod',['nodemon', 'watch'], done);});
 gulp.task('default', function (done) {
   runSequence('env:dev',['nodemon', 'watch'], done);
 });
