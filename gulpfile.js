@@ -288,7 +288,7 @@ gulp.task('test:e2e', function (done) {
 // gulp.task('heroku', function (done) {
 //   runSequence('env:prod', done);
 // });
-gulp.task('heroku:production', ['public','less', 'jade', 'js']);
+gulp.tasks('heroku:prod', [default]);
 gulp.task('default', function (done) {
   runSequence('env:dev',['nodemon', 'watch'], done);
 });
