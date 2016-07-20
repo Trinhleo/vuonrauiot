@@ -15,7 +15,7 @@
     "npm": ">=1.4.28"
   },
   "scripts": {
-    "start": "gulp nodemon",
+    "start": "node server.js",
     "postinstall": "bower install --config.interactive=false && gulp prod"
   },
   "dependencies": {
