@@ -3,14 +3,14 @@
 /**
  * Module dependencies.
  */
-var _ = require('lodash'),
-  defaultAssets = require('./config/assets/default'),
-  testAssets = require('./config/assets/test'),
-  testConfig = require('./config/env/test'),
-  fs = require('fs'),
-  path = require('path');
+ var _ = require('lodash'),
+ defaultAssets = require('./config/assets/default'),
+ testAssets = require('./config/assets/test'),
+ testConfig = require('./config/env/test'),
+ fs = require('fs'),
+ path = require('path');
 
-module.exports = function (grunt) {
+ module.exports = function (grunt) {
   // Project Configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -217,7 +217,7 @@ module.exports = function (grunt) {
     },
     copy: {
       localConfig: {
-        src: 'config/env/local.example.js',
+        src: 'config/env/local.js',
         dest: 'config/env/local.js',
         filter: function () {
           return !fs.existsSync('config/env/local.js');
@@ -226,7 +226,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.event.on('coverage', function(lcovFileContents, done) {
+grunt.event.on('coverage', function(lcovFileContents, done) {
     // Set coverage config so karma-coverage knows to run coverage
     testConfig.coverage = true;
     require('coveralls').handleInput(lcovFileContents, function(err) {
@@ -295,7 +295,6 @@ module.exports = function (grunt) {
       done();
     });
   });
-
   // Lint CSS and JavaScript files.
   grunt.registerTask('lint', ['sass', 'less', 'jshint', 'eslint', 'csslint']);
 

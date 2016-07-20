@@ -10,12 +10,12 @@ var mongoose = require('mongoose'),
  * Information Schema
  */
 var InformationSchema = new Schema({
-  // name: {
-  //   type: String,
-  //   default: '',
-  //   required: 'Please fill Information name',
-  //   trim: true
-  // },
+  name: {
+    type: String,
+    default: '',
+    required: 'Please fill Information name',
+    trim: true
+  },
   created: {
     type: Date,
     default: Date.now
