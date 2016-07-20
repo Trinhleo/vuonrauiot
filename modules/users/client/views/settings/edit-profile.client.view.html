@@ -1,0 +1,46 @@
+<section class="row" ng-controller="EditProfileController">
+  <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
+    <form name="userForm" ng-submit="updateUserProfile(userForm.$valid)" class="signin" novalidate autocomplete="off">
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="firstName">Tên</label>
+          <input type="text" id="firstName" name="firstName" class="form-control" ng-model="user.firstName" placeholder="Tên" required>
+          <div ng-messages="userForm.firstName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Tên là bắt buộc!</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="lastName">Họ</label>
+          <input type="text" id="lastName" name="lastName" class="form-control" ng-model="user.lastName" placeholder="Last Name" required>
+          <div ng-messages="userForm.lastName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Họ là bắt buộc!</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" ng-model="user.email" placeholder="Email" lowercase required>
+          <div ng-messages="userForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Email là bắt buộc!</p>
+            <p class="help-block error-text" ng-message="email">Email không hợp lệ!.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="username">Tên đăng nhập</label>
+          <input type="text" id="username" name="username" class="form-control" ng-model="user.username" placeholder="Tên đăng nhập" lowercase required>
+          <div ng-messages="userForm.username.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Tên đăng nhập là bắt buộc</p>
+          </div>
+        </div>
+        <div class="text-center form-group">
+          <button type="submit" class="btn btn-primary">Lưu hồ sơ</button>
+        </div>
+        <div ng-show="success" class="text-center text-success">
+          <strong>Hồ sơ lưu thành công</strong>
+        </div>
+        <div ng-show="error" class="text-center text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
