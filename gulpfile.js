@@ -285,8 +285,9 @@ gulp.task('build', function (done) {
 // });
 //
 // Run the project in development mode
-gulp.task('heroku',production);
-gulp.task('default', function (done) {
+gulp.task('heroku', function (done) {
+  runSequence('templatecache', 'build', 'env:prod',['nodemon', 'watch'], done);
+});gulp.task('default', function (done) {
   runSequence('env:dev',['nodemon', 'watch'], done);
 });
 
