@@ -21,6 +21,15 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/gardens/:gardenId',
       permissions: '*'
     }]
+  },{
+    roles: ['user'],
+    allows: [{
+      resources: '/api/gardens',
+      permissions: '*'
+    }, {
+      resources: '/api/gardens/:gardenId',
+      permissions: '*'
+    }]
   }]);
 };
 

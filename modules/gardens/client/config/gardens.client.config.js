@@ -10,10 +10,25 @@
   function menuConfig(Menus) {
     // Set top bar menu items
     // Add the dropdown list item
-    Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Quản lý vườn rau',
+    Menus.addMenuItem('topbar', {
+      title: 'Quản lý vườn',
+      state: 'gardens',
+      type: 'dropdown',
+      roles:  ['user','admin'],
+      position:1
+    });
+
+    // Add the dropdown list item
+    Menus.addSubMenuItem('topbar', 'gardens', {
+      title: 'Danh sách vườn',
       state: 'gardens.list',
-      roles: ['admin']
+      roles: ['user','admin']
+    });
+    // Add the dropdown create item
+    Menus.addSubMenuItem('topbar', 'gardens', {
+      title: 'Đăng ký mới',
+      state: 'gardens.create',
+      roles: ['user','admin']
     });
   }
 })();

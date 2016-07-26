@@ -13,7 +13,7 @@
       abstract: true,
       url: '/gardens',
       template: '<ui-view/>',
-      roles: ['admin']
+      roles: ['user']
     })
     .state('gardens.list', {
       url: '',
@@ -22,7 +22,7 @@
       controllerAs: 'vm',
       data: {
         pageTitle: 'Gardens List',
-         roles: ['admin']
+         roles: ['user','admin']
       }
     })
     .state('gardens.create', {
@@ -34,7 +34,7 @@
         gardenResolve: newGarden
       },
       data: {
-        roles: ['admin'],
+        roles: ['user','admin'],
         pageTitle : 'Gardens Create'
       }
     })
@@ -47,7 +47,7 @@
         gardenResolve: getGarden
       },
       data: {
-        roles: ['admin'],
+        roles: ['user','admin'],
         pageTitle: 'Edit Garden {{ gardenResolve.name }}'
       }
     })
@@ -61,7 +61,7 @@
       },
       data:{
         pageTitle: 'Garden {{ articleResolve.name }}',
-        roles: ['admin']
+        roles: ['user','admin']
       }
     });
   }

@@ -9,7 +9,6 @@
 
   function GardensListController(GardensService) {
     var vm = this;
-
     vm.gardens = GardensService.query();
   }
 })();
