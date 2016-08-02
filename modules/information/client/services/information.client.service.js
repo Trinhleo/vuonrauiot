@@ -13,7 +13,7 @@
       informationId: '@_id'
     }, {
       update: {
-        method: 'GET'
+        method: 'PUT'
       }
     });
   }

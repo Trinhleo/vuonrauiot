@@ -15,7 +15,6 @@
  exports.create = function(req, res) {
   var garden = new Garden(req.body);
   garden.user = req.user;
-
   garden.save(function(err) {
     if (err) {
       return res.status(400).send({
@@ -25,6 +24,7 @@
       res.jsonp(garden);
     }
   });
+
 };
 
 /**
@@ -46,9 +46,8 @@
  */
  exports.update = function(req, res) {
   var garden = req.garden ;
-
+  var dbmanage = req.garden
   garden = _.extend(garden , req.body);
-
   garden.save(function(err) {
     if (err) {
       return res.status(400).send({
@@ -57,7 +56,7 @@
     } else {
       res.jsonp(garden);
     }
-  });
+  })
 };
 
 /**
@@ -65,7 +64,6 @@
  */
  exports.delete = function(req, res) {
   var garden = req.garden ;
-
   garden.remove(function(err) {
     if (err) {
       return res.status(400).send({
@@ -112,7 +110,7 @@
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Garden is invalid'
+      message: 'Vườn không hợp lệ'
     });
   }
 
@@ -121,7 +119,7 @@
       return next(err);
     } else if (!garden) {
       return res.status(404).send({
-        message: 'No Garden with that identifier has been found'
+        message: 'Không tìm thấy vườn!'
       });
     }
     req.garden = garden;

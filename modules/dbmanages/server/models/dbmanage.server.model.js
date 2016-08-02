@@ -7,8 +7,38 @@
  Schema = mongoose.Schema;
 
 /**
- * Garden Schema
+ * Dbmanage Schema
  */
+ var DbmanageSchema = new Schema({
+  name: {
+    type: String,
+    default: '',
+    required: 'Hãy nhập tên mùa vụ',
+    trim: true,
+    unique: 'Đã tồn tại'
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  garden : [{ type: Schema.Types.ObjectId, ref: 'Dbgardens' }],
+  infomationList: {
+    type: Array,
+    items: {
+      type: Object,
+      properties: {
+        "name": {
+          type: String
+        },
+        "quantity": {
+          type: Number,
+          default: 0,
+          min: 0
+        }
+      }
+    }
+  }
+});
  var GardenSchema = new Schema({
   name: {
     type: String,
@@ -48,4 +78,7 @@
     }
   }
 });
- mongoose.model('Garden', GardenSchema);
+ mongoose.model('Dbgardens', 
+  GardenSchema, 
+  'gardens');  
+ mongoose.model('Dbmanage', DbmanageSchema);

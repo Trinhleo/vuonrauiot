@@ -8,7 +8,7 @@ var getUniqueErrorMessage = function (err) {
 
   try {
     var fieldName = err.errmsg.substring(err.errmsg.lastIndexOf('.$') + 2, err.errmsg.lastIndexOf('_1'));
-    output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' đã tồn tại!';
+    output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' Đã tồn tại!';
 
   } catch (ex) {
     output = 'Trường duy nhất đã tồn tại!';

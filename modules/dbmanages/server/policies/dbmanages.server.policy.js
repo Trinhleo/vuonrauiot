@@ -9,47 +9,47 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Information Permissions
+ * Invoke Dbmanages Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/information',
+      resources: '/api/dbmanages',
       permissions: '*'
     }, {
-      resources: '/api/information/:informationId',
+      resources: '/api/dbmanages/:dbmanageId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/information',
+      resources: '/api/dbmanages',
       permissions: ['get']
     }, {
-      resources: '/api/information/:informationId',
+      resources: '/api/dbmanages/:dbmanageId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/information',
+      resources: '/api/dbmanages',
       permissions: ['get']
     }, {
-      resources: '/api/information/:informationId',
+      resources: '/api/dbmanages/:dbmanageId',
       permissions: ['get']
     }]
   }]);
 };
 
 /**
- * Check If Information Policy Allows
+ * Check If Dbmanages Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an Information is being processed and the current user created it then allow any manipulation
-  if (req.information && req.user && req.information.user && req.information.user.id === req.user.id) {
+  // If an Dbmanage is being processed and the current user created it then allow any manipulation
+  if (req.dbmanage && req.user && req.dbmanage.user && req.dbmanage.user.id === req.user.id) {
     return next();
   }
 

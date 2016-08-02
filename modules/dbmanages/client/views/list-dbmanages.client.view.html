@@ -1,0 +1,46 @@
+<section>
+  <div class="page-header"> <h1>Dữ liệu vườn rau</h1></div>
+  <form layout="row" flex="100">
+  <div layout="column" flex-gt-xs="45" flex-xs="100" style="margin-right: 100px">
+      <md-subheader class="md-primary">Danh sách vườn rau</md-subheader>
+      <md-input-container>
+      <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Tìm kiếm" ng-change="vm.figureOutItemsToDisplay()" />
+    </md-input-container>
+    <div class="list-group">
+      <a data-ng-repeat="garden in vm.pagedItems" data-ui-sref="dbmanage.view({ dbmanageId: garden._id })" class="list-group-item">
+        <small >
+          Tạo lúc
+          <span data-ng-bind="garden.created | date:'mediumDate'"></span>
+          by
+          <span data-ng-if="garden.user" data-ng-bind="garden.user.displayName"></span>
+          <span data-ng-if="!garden.user">User</span>
+        </small>
+        <h4 data-ng-bind="garden.name"></h4>
+      </a>
+    </div>
+    <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+  </div>
+  <div layout="column"flex-gt-xs="45" flex-xs="100">
+    <md-subheader class="md-accent">Danh sách mùa vụ</md-subheader>
+    <md-input-container>
+    <input class="form-control col-md-4" type="text" ng-model="vm.search2" placeholder="Tìm kiếm" ng-change="vm.figureOutItemsToDisplay2()" />
+  </md-input-container>
+  <div class="list-group">
+    <a data-ng-repeat="dbmanage in vm.pagedItems2" data-ui-sref="dbmanages.view({ dbmanageId: dbmanage._id })" class="list-group-item">
+      <small>
+        Tạo lúc
+        <span data-ng-bind="dbmanage.created | date:'mediumDate'"></span>
+        by
+        <span data-ng-if="dbmanage.user" data-ng-bind="dbmanage.user.displayName"></span>
+        <span data-ng-if="!dbmanage.user">User</span>
+      </small>
+      <h4 data-ng-bind="dbmanage.name"></h4>
+    </a>
+  </div>
+  <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage2" total-items="vm.filterLength2" ng-model="vm.currentPage2" ng-change="vm.pageChanged2()"></pagination>
+  <div class="alert alert-warning text-center" data-ng-if="vm.dbmanages.$resolved && !vm.dbmanages.length">
+    Không có dữ liệu!</a>?
+  </div>
+</div>
+</form>
+</section>
