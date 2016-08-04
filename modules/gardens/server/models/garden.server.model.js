@@ -23,6 +23,13 @@
     required: 'Hãy nhập địa chỉ vườn',
     trim: true
   },
+    area: {
+        type: Number,
+        default: 0.00,
+        min: 0.00,
+        max:1000000,
+        required: 'Hãy nhập diên tích vườn',
+    },
   created: {
     type: Date,
     default: Date.now
@@ -38,11 +45,6 @@
       properties: {
         "name": {
           type: String
-        },
-        "quantity": {
-          type: Number,
-          default: 0,
-          min: 0
         }
       }
     }

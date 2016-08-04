@@ -6,7 +6,7 @@ angular.module('users.admin').controller('UserController', ['$scope', '$state', 
     $scope.user = userResolve;
 
     $scope.remove = function (user) {
-      if (confirm('Are you sure you want to delete this user?')) {
+      if (confirm('Bạn có muốn xóa người dùng này hay không?')) {
         if (user) {
           user.$remove();
 

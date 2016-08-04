@@ -47,9 +47,9 @@ exports.invokeRolesPolicies = function () {
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
-
+  var currentUserRoles = req.user.roles[0];
   // If an Dbmanage is being processed and the current user created it then allow any manipulation
-  if (req.dbmanage && req.user && req.dbmanage.user && req.dbmanage.user.id === req.user.id) {
+  if ((req.dbmanage && req.user && req.dbmanage.user && req.dbmanage.user.id === req.user.id)||(currentUserRoles==='admin')) {
     return next();
   }
 
