@@ -11,7 +11,7 @@
     // Set top bar menu items
     // Add the dropdown list item
     Menus.addMenuItem('topbar', {
-      title: 'Quản lý vườn',
+      title: 'Quản lý sản xuất',
       state: 'gardens',
       type: 'dropdown',
       roles:  ['user','admin'],
@@ -26,7 +26,7 @@
     });
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'gardens', {
-      title: 'Đăng ký mới',
+      title: 'Đăng ký vườn',
       state: 'gardens.create',
       roles: ['user','admin']
     });

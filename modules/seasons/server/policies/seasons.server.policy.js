@@ -9,47 +9,47 @@ var acl = require('acl');
 acl = new acl(new acl.memoryBackend());
 
 /**
- * Invoke Dbmanages Permissions
+ * Invoke Seasons Permissions
  */
 exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/dbmanages',
+      resources: '/api/seasons',
       permissions: '*'
     }, {
-      resources: '/api/dbmanages/:dbmanageId',
+      resources: '/api/seasons/:seasonId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/dbmanages',
+      resources: '/api/seasons',
       permissions: ['get']
     }, {
-      resources: '/api/dbmanages/:dbmanageId',
+      resources: '/api/seasons/:seasonId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/dbmanages',
+      resources: '/api/seasons',
       permissions: ['get']
     }, {
-      resources: '/api/dbmanages/:dbmanageId',
+      resources: '/api/seasons/:seasonId',
       permissions: ['get']
     }]
   }]);
 };
 
 /**
- * Check If Dbmanages Policy Allows
+ * Check If Seasons Policy Allows
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
-  var currentUserRoles = req.user.roles[0];
-  // If an Dbmanage is being processed and the current user created it then allow any manipulation
-  if ((req.dbmanage && req.user && req.dbmanage.user && req.dbmanage.user.id === req.user.id)||(currentUserRoles==='admin')) {
+
+  // If an Season is being processed and the current user created it then allow any manipulation
+  if (req.season && req.user && req.season.user && req.season.user.id === req.user.id) {
     return next();
   }
 
@@ -57,14 +57,14 @@ exports.isAllowed = function (req, res, next) {
   acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowed) {
     if (err) {
       // An authorization error occurred
-      return res.status(500).send('Lỗi xác thực');
+      return res.status(500).send('Unexpected authorization error');
     } else {
       if (isAllowed) {
         // Access granted! Invoke next middleware
         return next();
       } else {
         return res.status(403).json({
-          message: 'Người dùng không được xác thực'
+          message: 'User is not authorized'
         });
       }
     }

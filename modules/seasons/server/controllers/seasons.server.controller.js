@@ -5,107 +5,115 @@
  */
 var path = require('path'),
     mongoose = require('mongoose'),
-    Dbmanage = mongoose.model('Dbmanage'),
+    Season = mongoose.model('Season'),
     Dbgardens = mongoose.model('Dbgardens'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     _ = require('lodash');
 
 /**
- * Create a Dbmanage
+ * Create a Season
  */
 exports.create = function (req, res) {
-    var dbmanage = new Dbmanage(req.body);
-    dbmanage.save(function (err) {
+    var season = new Season(req.body);
+    // season.user = req.user;
+
+    season.save(function (err) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(dbmanage);
+            res.jsonp(season);
         }
     });
 };
 
 /**
- * Show the current Dbmanage
+ * Show the current Season
  */
 exports.read = function (req, res) {
     // convert mongoose document to JSON
-    var dbmanage = req.dbmanage ? req.dbmanage.toJSON() : {};
+    var season = req.season ? req.season.toJSON() : {};
     var currentUserRoles = req.user.roles[0];
-    dbmanage.isCurrentUserOwner = (currentUserRoles === 'admin')? true : false;
-    // garden.isCurrentUserOwner = req.user && garden.user && garden.user._id.toString() === req.user._id.toString() ? true : false;
-    res.jsonp(dbmanage);
+    season.isCurrentUserOwner = (currentUserRoles === 'admin') ? true : false;
+    // Add a custom field to the Article, for determining if the current User is the "owner".
+    // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
+    // season.isCurrentUserOwner = req.user && season.user && season.user._id.toString() === req.user._id.toString() ? true : false;
+
+    res.jsonp(season);
 };
 
 /**
- * Update a Dbmanage
+ * Update a Season
  */
 exports.update = function (req, res) {
-    var dbmanage = req.dbmanage;
-    dbmanage = _.extend(dbmanage, req.body);
-    dbmanage.save(function (err) {
+    var season = req.season;
+
+    season = _.extend(season, req.body);
+
+    season.save(function (err) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(dbmanage);
+            res.jsonp(season);
         }
     });
 };
 
 /**
- * Delete an Dbmanage
+ * Delete an Season
  */
 exports.delete = function (req, res) {
-    var dbmanage = req.dbmanage;
+    var season = req.season;
 
-    dbmanage.remove(function (err) {
+    season.remove(function (err) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(dbmanage);
+            res.jsonp(season);
         }
     });
 };
 
 /**
- * List of Dbmanages
+ * List of Seasons
  */
 exports.list = function (req, res) {
-    Dbmanage.find().sort('-created').populate('user', 'displayName').exec(function (err, dbmanages) {
+    Season.find().sort('-created').populate('user', 'displayName').exec(function (err, seasons) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(dbmanages);
+            res.jsonp(seasons);
         }
     });
 };
 
 /**
- * Dbmanage middleware
+ * Season middleware
  */
-exports.dbmanageByID = function (req, res, next, id) {
+exports.seasonByID = function (req, res, next, id) {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({
-            message: 'Không hợp lệ!'
+            message: 'Mùa vụ không hợp lệ'
         });
     }
-    Dbmanage.findById(id).populate('user', 'displayName').exec(function (err, dbmanage) {
+
+    Season.findById(id).populate('user', 'displayName').exec(function (err, season) {
         if (err) {
             return next(err);
-        } else if (!dbmanage) {
+        } else if (!season) {
             return res.status(404).send({
-                message: 'Không tìm thấy dữ liệu với id này!'
+                message: 'Không tìm thấy mùa vụ'
             });
         }
-        req.dbmanage = dbmanage;
+        req.season = season;
         next();
     });
 };

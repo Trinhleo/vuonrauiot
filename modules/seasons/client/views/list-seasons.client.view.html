@@ -1,0 +1,58 @@
+<section>
+  <div class="page-header">
+    <h1>Danh sách mùa vụ</h1>
+    <div class="col-md-4" style="margin-top: 20px">
+      <a data-toggle="tooltip" title="Tạo mùa vụ mới" class="btn btn-primary"
+         data-ui-sref="seasons.create">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </div>
+    <div  class="col-md-4">
+      <md-input-container>
+        <input class="form-control" type="text" ng-model="vm.search2" placeholder="Tìm kiếm"
+               ng-change="vm.figureOutItemsToDisplay2()"/>
+      </md-input-container>
+    </div>
+  </div>
+  <!--<form layout="row" flex="100">-->
+  <!--<div layout="column" flex-gt-xs="45" flex-xs="100" style="margin-right: 100px">-->
+  <!--<md-subheader class="md-primary">Danh sách vườn rau</md-subheader>-->
+  <!--<md-input-container>-->
+  <!--<input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Tìm kiếm" ng-change="vm.figureOutItemsToDisplay()" />-->
+  <!--</md-input-container>-->
+  <!--<div class="list-group">-->
+  <!--<a data-ng-repeat="garden in vm.pagedItems" data-ui-sref="dbmanage.view({ dbmanageId: garden._id })" class="list-group-item">-->
+  <!--<small >-->
+  <!--Tạo lúc-->
+  <!--<span data-ng-bind="garden.created | date:'mediumDate'"></span>-->
+  <!--by-->
+  <!--<span data-ng-if="garden.user" data-ng-bind="garden.user.displayName"></span>-->
+  <!--<span data-ng-if="!garden.user">User</span>-->
+  <!--</small>-->
+  <!--<h4 data-ng-bind="garden.name"></h4>-->
+  <!--</a>-->
+  <!--</div>-->
+  <!--<pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>-->
+  <!--</div>-->
+  <div class="col-md-offset-3 col-md-6 col-md-offset-3" style="padding:0">
+    <div class="list-group">
+      <a data-ng-repeat="season in vm.pagedItems2" data-ui-sref="season.view({ seasonId: season._id })"
+         class="list-group-item">
+        <small>
+          Tạo lúc
+          <span data-ng-bind="season.created | date:'mediumDate'"></span>
+          by
+          <span data-ng-if="season.user" data-ng-bind="season.user.displayName"></span>
+          <span data-ng-if="!season.user">User</span>
+        </small>
+        <h4 data-ng-bind="season.name"></h4>
+      </a>
+    </div>
+    <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage2" total-items="vm.filterLength2"
+                ng-model="vm.currentPage2" ng-change="vm.pageChanged2()"></pagination>
+    <div class="alert alert-warning text-center" data-ng-if="vm.season.$resolved && !vm.season.length">
+      Không có dữ liệu!</a>?
+    </div>
+  </div>
+  <!--</form>-->
+</section>
