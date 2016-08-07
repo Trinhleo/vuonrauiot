@@ -1,8 +1,14 @@
-'use strict';
+//Articles service used to communicate Articles REST endpoints
+(function () {
+  'use strict';
 
-//Articles service used for communicating with the articles REST endpoints
-angular.module('articles').factory('Articles', ['$resource',
-  function ($resource) {
+  angular
+    .module('articles')
+    .factory('ArticlesService', ArticlesService);
+
+  ArticlesService.$inject = ['$resource'];
+
+  function ArticlesService($resource) {
     return $resource('api/articles/:articleId', {
       articleId: '@_id'
     }, {
@@ -11,4 +17,4 @@ angular.module('articles').factory('Articles', ['$resource',
       }
     });
   }
-]);
+})();

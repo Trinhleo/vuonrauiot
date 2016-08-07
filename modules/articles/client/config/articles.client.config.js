@@ -1,28 +1,33 @@
-'use strict';
+(function () {
+  'use strict';
 
-// Configuring the Articles module
-angular.module('articles').run(['Menus',
-  function (Menus) {
-    // Add the articles dropdown item
+  angular
+    .module('articles')
+    .run(menuConfig);
+
+  menuConfig.$inject = ['Menus'];
+
+  function menuConfig(Menus) {
+    // Set top bar menu items
     Menus.addMenuItem('topbar', {
-      title: 'Blog chia sẻ',
+      title: 'Bài viết nông nghiệp',
       state: 'articles',
       type: 'dropdown',
-      roles: ['*'],
-      position:1
+      position:1,
+      roles: ['*']
     });
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'articles', {
-      title: 'Liệt kê bài viết',
+      title: 'Danh sách bài viết',
       state: 'articles.list'
     });
 
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'articles', {
-      title: 'Viết bài',
+      title: 'Tạo bài viết',
       state: 'articles.create',
       roles: ['user','admin']
     });
   }
-]);
+})();

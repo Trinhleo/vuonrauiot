@@ -26,7 +26,7 @@ var SeasonSchema = new Schema({
   },
   garden: {
     type: Schema.ObjectId,
-    ref: 'Gardens'
+    ref: 'seasongardens'
   },
   products: {
     type: Array,

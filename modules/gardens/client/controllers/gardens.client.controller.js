@@ -15,6 +15,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+   
     // vegetable choose
    //  vm.quantityShow = function (item){
    //   var idx = _.values(vm.selected).indexOf(name);
@@ -26,6 +27,9 @@
    //    // vm.vegetableCategoryObj[idx]=quantity;
    //
    //  }
+   vm.createSeason = function () {
+    $state.go('seasons.create',{gardenId:vm.garden._id});
+   }
     vm.vegetableCategory = [
     "Cải bắp","Cải ngọt","Cà rốt","Khoai tây","Xà lách"
     ];

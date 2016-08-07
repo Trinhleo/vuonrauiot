@@ -10,7 +10,7 @@
   function menuConfig(Menus) {
     // Set top bar menu items
     Menus.addMenuItem('topbar', {
-      title: 'Thông tin vườn rau',
+      title: 'Sản phẩm',
       state: 'information',
       type: 'dropdown',
       roles: ['*'],
@@ -19,7 +19,7 @@
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'information', {
-      title: 'Liệt kê thông tin vườn rau',
+      title: 'Danh sách sản phẩm',
       state: 'information.list'
     });
     // // Add the dropdown create item

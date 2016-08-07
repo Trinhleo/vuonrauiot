@@ -1,61 +1,66 @@
 <section>
   <div class="page-header">
-    <h1>{{vm.garden._id ? 'Chỉnh sửa thông tin vườn rau' : 'Đăng ký thông tin vườn rau'}}</h1>
+    <ol class = "breadcrumb">
+     <li><a data-ui-sref="home">Trang chủ</a></li>
+     <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
+     <li class = "active" data-ng-show="vm.garden._id">{{vm.garden.name}}</li>
+   </ol>
+   <h1>{{vm.garden._id ? 'Chỉnh sửa thông tin vườn rau' : 'Đăng ký thông tin vườn rau'}}</h1>
+ </div>
+ <div class="col-md-offset-3 col-md-6 col-md-offset-3" >
+  <form name="vm.form.gardenForm" class="form-horizontal" ng-submit="vm.save(vm.form.gardenForm.$valid)" novalidate>
+    <fieldset>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="name">Tên vườn</label>
+        <input name="name" type="text" ng-model="vm.garden.name" id="name" class="form-control"
+        placeholder="Tên vườn" required>
+        <div ng-messages="vm.form.gardenForm.name.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Tên vườn là bắt buộc.</p>
+        </div>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="name">Địa chỉ</label>
+        <input name="address" type="text" ng-model="vm.garden.address" id="address" class="form-control"
+        placeholder="Địa chỉ" required>
+        <div ng-messages="vm.form.gardenForm.address.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Địa chỉ vườn là bắt buộc.</p>
+        </div>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="name">Diện tích (m2)</label>
+        <input name="area" type="number" ng-model="vm.garden.area" id="address" class="form-control"
+        placeholder="Diện tích" required min="0" max="1000000">
+        <div ng-messages="vm.form.gardenForm.area.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Diện tích vườn là bắt buộc.</p>
+          <p class="help-block error-text" ng-message="min">Không được nhập số âm.</p>
+          <p class="help-block error-text" ng-message="max">Chỉ được nhập tối đa là 1000000.</p>
+        </div>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label">Chọn loại rau củ quả của vườn</label>
+      </div>
+      <div layout="row" layout-wrap flex>
+        <div flex-xs flex="50">
+          <md-checkbox aria-label="Chọn Tất Cả"
+          ng-checked="vm.isChecked()"
+          md-indeterminate="vm.isIndeterminate()"
+          ng-click="vm.toggleAll()">
+          <span ng-if="vm.isChecked()">Bỏ </span>Chọn Tất Cả
+        </md-checkbox>
+      </div>
+      <div class="choose-vegetable" flex="100" ng-repeat="item in vm.vegetableCategory">
+        <md-checkbox ng-checked="vm.exists(item, vm.selected)" ng-click="vm.toggle(item,vm.selected)">
+        {{item}}
+      </md-checkbox>
+    </div>
   </div>
-  <div class="col-md-offset-3 col-md-6 col-md-offset-3" >
-    <form name="vm.form.gardenForm" class="form-horizontal" ng-submit="vm.save(vm.form.gardenForm.$valid)" novalidate>
-      <fieldset>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Tên vườn</label>
-          <input name="name" type="text" ng-model="vm.garden.name" id="name" class="form-control"
-                 placeholder="Tên vườn" required>
-          <div ng-messages="vm.form.gardenForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Tên vườn là bắt buộc.</p>
-          </div>
-        </div>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Địa chỉ</label>
-          <input name="address" type="text" ng-model="vm.garden.address" id="address" class="form-control"
-                 placeholder="Địa chỉ" required>
-          <div ng-messages="vm.form.gardenForm.address.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Địa chỉ vườn là bắt buộc.</p>
-          </div>
-        </div>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Diện tích (m2)</label>
-          <input name="area" type="number" ng-model="vm.garden.area" id="address" class="form-control"
-                 placeholder="Diện tích" required min="0" max="1000000">
-          <div ng-messages="vm.form.gardenForm.area.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Diện tích vườn là bắt buộc.</p>
-            <p class="help-block error-text" ng-message="min">Không được nhập số âm.</p>
-            <p class="help-block error-text" ng-message="max">Chỉ được nhập tối đa là 1000000.</p>
-          </div>
-        </div>
-        <div class="form-group" show-errors>
-          <label class="control-label">Chọn loại rau củ quả của vườn</label>
-        </div>
-        <div layout="row" layout-wrap flex>
-          <div flex-xs flex="50">
-            <md-checkbox aria-label="Chọn Tất Cả"
-                         ng-checked="vm.isChecked()"
-                         md-indeterminate="vm.isIndeterminate()"
-                         ng-click="vm.toggleAll()">
-              <span ng-if="vm.isChecked()">Bỏ </span>Chọn Tất Cả
-            </md-checkbox>
-          </div>
-          <div class="choose-vegetable" flex="100" ng-repeat="item in vm.vegetableCategory">
-            <md-checkbox ng-checked="vm.exists(item, vm.selected)" ng-click="vm.toggle(item,vm.selected)">
-              {{item}}
-            </md-checkbox>
-          </div>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.garden._id ? 'Cập Nhật' : 'Tạo'}}</button>
-        </div>
-        <div ng-show="vm.error" class="text-danger">
-          <strong ng-bind="vm.error"></strong>
-        </div>
-      </fieldset>
-    </form>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">{{vm.garden._id ? 'Cập Nhật' : 'Tạo'}}</button>
   </div>
+  <div ng-show="vm.error" class="text-danger">
+    <strong ng-bind="vm.error"></strong>
+  </div>
+</fieldset>
+</form>
+</div>
 </section>

@@ -5,6 +5,11 @@
 </style>
 <section>
   <div class="page-header">
+  <ol class = "breadcrumb">
+     <li><a data-ui-sref="home">Trang chủ</a></li>
+     <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
+     <li class = "active">Chi tiết vườn rau: {{vm.garden.name}}</li>
+   </ol>
     <h1 data-ng-bind="vm.garden.name"></h1>
     <i>Địa Chỉ: </i>
       <small data-ng-bind="vm.garden.address"></small> <br>
@@ -21,8 +26,14 @@
       </em>
     </small>
   </div>
+   <div class="col-md-4" style="margin-top: 20px" data-ng-show="vm.garden.isAdmin">
+      <a data-toggle="tooltip" title="Tạo mùa vụ mới" class="btn btn-primary"
+         ng-click="vm.createSeason();">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+    </div>
   <div class="col-md-offset-3 col-md-6 col-md-offset-3" style="padding:0">
-    <div class="pull-right" data-ng-show="vm.garden.isCurrentUserOwner">
+    <div class="pull-right" data-ng-show="vm.garden.isAllow">
       <a class="btn btn-primary" data-ui-sref="gardens.edit({ gardenId: vm.garden._id })">
         <i class="glyphicon glyphicon-edit"></i>
       </a>

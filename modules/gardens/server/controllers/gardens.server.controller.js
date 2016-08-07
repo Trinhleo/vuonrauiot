@@ -34,10 +34,9 @@
   // convert mongoose document to JSON
   var garden = req.garden ? req.garden.toJSON() : {};
 
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   garden.isCurrentUserOwner = req.user && garden.user && garden.user._id.toString() === req.user._id.toString() ? true : false;
-
+  garden.isAdmin = req.user.roles[0]==='admin'? true:false;
+  garden.isAllow = ( garden.isCurrentUserOwner|| garden.isAdmin)?true:false;
   res.jsonp(garden);
 };
 

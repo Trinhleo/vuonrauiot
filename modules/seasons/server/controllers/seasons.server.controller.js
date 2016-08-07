@@ -6,7 +6,7 @@
 var path = require('path'),
     mongoose = require('mongoose'),
     Season = mongoose.model('Season'),
-    Dbgardens = mongoose.model('Dbgardens'),
+    Seasongardens = mongoose.model('seasongardens'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     _ = require('lodash');
 
@@ -83,7 +83,7 @@ exports.delete = function (req, res) {
  * List of Seasons
  */
 exports.list = function (req, res) {
-    Season.find().sort('-created').populate('user', 'displayName').exec(function (err, seasons) {
+    Season.find().sort('-created').populate('garden', 'name').exec(function (err, seasons) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -105,7 +105,7 @@ exports.seasonByID = function (req, res, next, id) {
         });
     }
 
-    Season.findById(id).populate('user', 'displayName').exec(function (err, season) {
+    Season.findById(id).populate('garden', 'name').exec(function (err, season) {
         if (err) {
             return next(err);
         } else if (!season) {

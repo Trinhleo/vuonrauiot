@@ -3,8 +3,8 @@
 
     // Seasons controller
     angular
-        .module('seasons')
-        .controller('SeasonsController', SeasonsController);
+    .module('seasons')
+    .controller('SeasonsController', SeasonsController);
 
     SeasonsController.$inject = ['$scope', '$state', '$timeout', '$q', 'Authentication', 'seasonResolve', 'SeasonGardensService'];
 
@@ -18,52 +18,59 @@
         vm.save = save;
         var vm = this;
         vm.authentication = Authentication;
-        SeasonGardensService.query(function (data) {
-            vm.gardens = data;
-            vm.repos = vm.loadAll();
-        });
-        vm.loadAll = function () {
-            var repos = (vm.gardens) ? vm.gardens : [];
-            return repos.map(function (repo) {
-                repo.value = repo.name.toLowerCase();
-                return repo;
-            });
-        }
-        vm.simulateQuery = true;
-        vm.querySearch = function (query) {
-            var results = query ? vm.repos.filter(vm.createFilterFor(query)) : vm.repos,
-                deferred;
-            if (vm.simulateQuery) {
-                deferred = $q.defer();
-                $timeout(function () {
-                    deferred.resolve(results);
-                }, Math.random() * 1000, false);
-                return deferred.promise;
-            } else {
-                return results;
-            }
-        }
+        vm.gardenId = $state.params.gardenId;
+        if(!vm.season._id){
+            SeasonGardensService.get({
+              gardenId: $state.params.gardenId
+          },function (data) {
+            vm.garden = data;
+            vm.season.garden = vm.garden;
+        // vm.repos = vm.loadAll();
+    }).$promise
+        };
 
-        /**
-         * Create filter function for a query string
-         */
-        vm.createFilterFor = function (query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(item) {
-                return (item.value.indexOf(lowercaseQuery) === 0);
-            };
-        }
+    //   vm.loadAll = function () {
+    //     var repos = (vm.gardens) ? vm.gardens : [];
+    //     return repos.map(function (repo) {
+    //         repo.value = repo.name.toLowerCase();
+    //         return repo;
+    //     });
+    // }
+    // vm.simulateQuery = true;
+    // vm.querySearch = function (query) {
+    //     var results = query ? vm.repos.filter(vm.createFilterFor(query)) : vm.repos,
+    //     deferred;
+    //     if (vm.simulateQuery) {
+    //         deferred = $q.defer();
+    //         $timeout(function () {
+    //             deferred.resolve(results);
+    //         }, Math.random() * 1000, false);
+    //         return deferred.promise;
+    //     } else {
+    //         return results;
+    //     }
+    // }
+
+    //     /**
+    //      * Create filter function for a query string
+    //      */
+    //      vm.createFilterFor = function (query) {
+    //         var lowercaseQuery = angular.lowercase(query);
+    //         return function filterFn(item) {
+    //             return (item.value.indexOf(lowercaseQuery) === 0);
+    //         };
+    //     }
 
 
-        /**
-         * Create filter function for a query string
-         */
-        vm.createFilterFor = function (query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(item) {
-                return (item.value.indexOf(lowercaseQuery) === 0);
-            };
-        }
+    //     /**
+    //      * Create filter function for a query string
+    //      */
+    //      vm.createFilterFor = function (query) {
+    //         var lowercaseQuery = angular.lowercase(query);
+    //         return function filterFn(item) {
+    //             return (item.value.indexOf(lowercaseQuery) === 0);
+    //         };
+    //     }
         // Remove existing Season
         function remove() {
             if (confirm('Bạn có muốn xóa mùa vụ hay không?')) {

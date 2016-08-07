@@ -1,13 +1,15 @@
 <section>
   <div class="page-header">
-    <h1>{{vm.season._id ? 'Cập nhật mùa vụ' : 'Tạo mới mùa vụ'}}</h1>
+  <h1 ng-show="!vm.season._id">{{vm.garden.name}}</h1>
+   <h1 ng-show="vm.season._id">{{vm.season.garden.name}}</h1>
+    <h1>{{vm.season._id ? 'Cập nhật mùa vụ' : 'Tạo mùa vụ mới'}}</h1>
   </div>
   <form name="vm.form.seasonForm" class="form-horizontal" ng-submit="vm.save(vm.form.seasonForm.$valid)"
         novalidate>
     <fieldset class="col-md-offset-3 col-md-6 col-md-offset-3">
-      <div class="form-group" show-errors ng-show="!vm.season._id">
-        <label>Chọn vườn</label>
-        <md-autocomplete
+      <!-- <div class="form-group"> -->
+        <!-- <label>Chọn vườn</label> -->
+       <!--  <md-autocomplete
           required
           md-input-name="gardens"
           md-no-cache="vm.noCache"
@@ -29,29 +31,19 @@
           <md-not-found>
             Không tìm thấy vườn "{{vm.searchText}}".
           </md-not-found>
-        </md-autocomplete>
-        {{vm.season.garden}}
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label">Tên vườn</label>
-        <input name="gardenname" type="text" ng-model="vm.season.garden.name" id="garden_name" class="form-control"
-               required ng-disabled="true">
-        <div ng-messages="vm.form.seasonForm.gardenname.$error" role="alert">
-          <p class="help-block error-texst" ng-message="required">Hãy chọn vườn!</p>
-        </div>
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label">Tên mùa vụ</label>
+        </md-autocomplete> -->
+     <!--  </div> -->
+     <div class="form-group" show-errors>
+        <label class="control-label" for="name">Tên mùa vụ</label>
         <input name="name" type="text" ng-model="vm.season.name" id="name" class="form-control"
-               required>
-        <div ng-messages="vm.form.seasonForm.name.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Hãy nhập tên mùa vụ!</p>
+        placeholder="Tên mùa vụ" required>
+        <div ng-messages="vm.form.gardenForm.name.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Tên mùa vụ là bắt buộc.</p>
         </div>
       </div>
-      <br>
       <div class="form-group">
         <button type="submit" class="btn btn-default"
-                ng-disabled="vm.form.seasonForm.name.$invalid ||vm.form.seasonForm.gardenname.$invalid">
+                ng-disabled="vm.form.seasonForm.name.$invalid">
           {{vm.season._id ? 'Cập nhật' : 'Tạo mới'}}
         </button>
       </div>

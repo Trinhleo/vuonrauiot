@@ -3,69 +3,76 @@
 /**
  * Module dependencies.
  */
-var path = require('path'),
-  mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+ var path = require('path'),
+ mongoose = require('mongoose'),
+ Article = mongoose.model('Article'),
+ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+ _ = require('lodash');
 
 /**
- * Create a article
+ * Create a Article
  */
-exports.create = function (req, res) {
+ exports.create = function(req, res) {
   var article = new Article(req.body);
   article.user = req.user;
 
-  article.save(function (err) {
+  article.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.jsonp(article);
     }
   });
 };
 
 /**
- * Show the current article
+ * Show the current Article
  */
-exports.read = function (req, res) {
-  res.json(req.article);
+ exports.read = function(req, res) {
+  // convert mongoose document to JSON
+  var article = req.article ? req.article.toJSON() : {};
+
+  article.isCurrentUserOwner = req.user && article.user && article.user._id.toString() === req.user._id.toString() ? true : false;
+  article.isAdmin = req.user.roles[0]==='admin'? true:false;
+  article.isAllow = (article.isCurrentUserOwner || article.isAdmin) ? true: false; 
+
+  res.jsonp(article);
 };
 
 /**
- * Update a article
+ * Update a Article
  */
-exports.update = function (req, res) {
-  var article = req.article;
+ exports.update = function(req, res) {
+  var article = req.article ;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  article = _.extend(article , req.body);
 
-  article.save(function (err) {
+  article.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.jsonp(article);
     }
   });
 };
 
 /**
- * Delete an article
+ * Delete an Article
  */
-exports.delete = function (req, res) {
-  var article = req.article;
+ exports.delete = function(req, res) {
+  var article = req.article ;
 
-  article.remove(function (err) {
+  article.remove(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.jsonp(article);
     }
   });
 };
@@ -73,14 +80,14 @@ exports.delete = function (req, res) {
 /**
  * List of Articles
  */
-exports.list = function (req, res) {
-  Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+ exports.list = function(req, res) { 
+  Article.find().sort('-created').populate('user', 'displayName').exec(function(err, articles) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(articles);
+      res.jsonp(articles);
     }
   });
 };
@@ -88,7 +95,7 @@ exports.list = function (req, res) {
 /**
  * Article middleware
  */
-exports.articleByID = function (req, res, next, id) {
+ exports.articleByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -101,7 +108,7 @@ exports.articleByID = function (req, res, next, id) {
       return next(err);
     } else if (!article) {
       return res.status(404).send({
-        message: 'No article with that identifier has been found'
+        message: 'No Article with that identifier has been found'
       });
     }
     req.article = article;

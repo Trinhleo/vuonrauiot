@@ -3,27 +3,22 @@
 /**
  * Module dependencies.
  */
- var mongoose = require('mongoose'),
- Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 /**
  * Article Schema
  */
- var ArticleSchema = new Schema({
+var ArticleSchema = new Schema({
+  name: {
+    type: String,
+    default: '',
+    required: 'Please fill Article name',
+    trim: true
+  },
   created: {
     type: Date,
     default: Date.now
-  },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Tiêu đề không được để trống'
-  },
-  content: {
-    type: String,
-    default: '',
-    trim: true
   },
   user: {
     type: Schema.ObjectId,
@@ -31,4 +26,4 @@
   }
 });
 
- mongoose.model('Article', ArticleSchema);
+mongoose.model('Article', ArticleSchema);

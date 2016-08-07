@@ -34,11 +34,11 @@ exports.forgot = function (req, res, next) {
         }, '-salt -password', function (err, user) {
           if (!user) {
             return res.status(400).send({
-              message: 'No account with that username has been found'
+              message: 'Không tìm thấy tài khoản với người dùng này!'
             });
           } else if (user.provider !== 'local') {
             return res.status(400).send({
-              message: 'It seems like you signed up using your ' + user.provider + ' account'
+              message: 'Bạn đã đăng ký với tài khoản' + user.provider
             });
           } else {
             user.resetPasswordToken = token;
@@ -51,7 +51,7 @@ exports.forgot = function (req, res, next) {
         });
       } else {
         return res.status(400).send({
-          message: 'Username field must not be blank'
+          message: 'Username không được để trống'
         });
       }
     },
@@ -80,11 +80,11 @@ exports.forgot = function (req, res, next) {
       smtpTransport.sendMail(mailOptions, function (err) {
         if (!err) {
           res.send({
-            message: 'An email has been sent to the provided email with further instructions.'
+            message: 'Một email đã được gửi vào hộp thư điện tử của bạn kèm theo hướng dẫn.'
           });
         } else {
           return res.status(400).send({
-            message: 'Failure sending email'
+            message: 'Không gửi được email'
           });
         }
 

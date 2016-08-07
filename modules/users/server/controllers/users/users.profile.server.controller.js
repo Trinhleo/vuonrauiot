@@ -45,7 +45,7 @@ exports.update = function (req, res) {
     });
   } else {
     res.status(400).send({
-      message: 'User is not signed in'
+      message: 'Người dùng chưa đăng nhập'
     });
   }
 };
@@ -66,7 +66,7 @@ exports.changeProfilePicture = function (req, res) {
     upload(req, res, function (uploadError) {
       if(uploadError) {
         return res.status(400).send({
-          message: 'Error occurred while uploading profile picture'
+          message: 'Lỗi trong quá trình tải ảnh lên'
         });
       } else {
         user.profileImageURL = config.uploads.profileUpload.dest + req.file.filename;
@@ -90,7 +90,7 @@ exports.changeProfilePicture = function (req, res) {
     });
   } else {
     res.status(400).send({
-      message: 'User is not signed in'
+      message: 'Người dùng chưa đăng nhập'
     });
   }
 };
