@@ -1,5 +1,10 @@
 <section>
   <div class="page-header">
+  <ol class = "breadcrumb">
+     <li><a data-ui-sref="home">Trang chủ</a></li>
+     <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
+      <li><a ng-click="vm.goBack();">Chi tiết vườn rau</a></li>
+   </ol>
   <h1 ng-show="!vm.season._id">{{vm.garden.name}}</h1>
    <h1 ng-show="vm.season._id">{{vm.season.garden.name}}</h1>
     <h1>{{vm.season._id ? 'Cập nhật mùa vụ' : 'Tạo mùa vụ mới'}}</h1>

@@ -6,6 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Information = mongoose.model('Information'),
+  DbSeason = mongoose.model('Dbseason'),
+  Dbeasongardens = mongoose.model('Dbseasongardens'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -77,7 +79,7 @@ exports.delete = function(req, res) {
  * List of Information
  */
 exports.list = function(req, res) { 
-  Information.find().sort('-created').populate('user', 'displayName').exec(function(err, information) {
+  Information.find().sort('-created').populate('Dbseason', 'name').exec(function(err, information) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

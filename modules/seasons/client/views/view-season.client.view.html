@@ -1,7 +1,14 @@
 <section>
   <div class="page-header">
+  <ol class = "breadcrumb">
+     <li><a data-ui-sref="home">Trang chủ</a></li>
+     <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
+<!--       <li><a ng-click="vm.goBack();">Chi tiết vườn rau</a></li> -->
+     <li class ="active">Chi tiết mùa vụ</li>
+   </ol>
     <h1 data-ng-bind="vm.season.garden.name"></h1>
     <h1 data-ng-bind="vm.season.name"></h1>
+    <h1>Status: {{vm.season.status}}</h1>
   </div>
   <div class="pull-right"
        data-ng-show="vm.season.isCurrentUserOwner">

@@ -5,58 +5,83 @@
 </style>
 <section>
   <div class="page-header">
-  <ol class = "breadcrumb">
+    <ol class = "breadcrumb">
      <li><a data-ui-sref="home">Trang chủ</a></li>
      <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
-     <li class = "active">Chi tiết vườn rau: {{vm.garden.name}}</li>
+     <li class = "active">Chi tiết vườn rau</li>
    </ol>
-    <h1 data-ng-bind="vm.garden.name"></h1>
-    <i>Địa Chỉ: </i>
-      <small data-ng-bind="vm.garden.address"></small> <br>
-    <i>Diện tích:</i>
-    <small data-ng-bind="vm.garden.area">(m2)</small> <br>
-    <small>
-      <em class="text-muted">
-        Đã tạo lúc
-        <span data-ng-bind="vm.garden.created | date:'mediumDate'"></span> <br>
-        Chủ vườn:
+   <h1 data-ng-bind="vm.garden.name"></h1>
+   <i>Địa Chỉ: </i>
+   <small data-ng-bind="vm.garden.address"></small> <br>
+   <i>Diện tích:</i>
+   {{vm.garden.area}}<small> m<sup>2</small> <br>
+   <small>
+    <em class="text-muted">
+      Đã tạo lúc
+      <span data-ng-bind="vm.garden.created | date:'mediumDate'"></span> <br>
+      Chủ vườn:
       <span data-ng-if="vm.garden.user"
-            data-ng-bind="vm.garden.user.displayName"></span>
-        <span data-ng-if="!vm.garden.user">Người dùng đã bị xóa</span>
-      </em>
-    </small>
+      data-ng-bind="vm.garden.user.displayName"></span>
+      <span data-ng-if="!vm.garden.user">Người dùng đã bị xóa</span>
+    </em>
+  </small>
+</div>
+<md-tabs md-dynamic-height md-border-bottom>
+<md-tab label="Danh sách vườn rau">
+<div>
+  <div class="pull-right" data-ng-show="vm.garden.isAllow">
+    <a class="btn btn-primary" data-ui-sref="gardens.edit({ gardenId: vm.garden._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" data-ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
   </div>
-   <div class="col-md-4" style="margin-top: 20px" data-ng-show="vm.garden.isAdmin">
-      <a data-toggle="tooltip" title="Tạo mùa vụ mới" class="btn btn-primary"
-         ng-click="vm.createSeason();">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-  <div class="col-md-offset-3 col-md-6 col-md-offset-3" style="padding:0">
-    <div class="pull-right" data-ng-show="vm.garden.isAllow">
-      <a class="btn btn-primary" data-ui-sref="gardens.edit({ gardenId: vm.garden._id })">
-        <i class="glyphicon glyphicon-edit"></i>
-      </a>
-      <a class="btn btn-primary" data-ng-click="vm.remove()">
-        <i class="glyphicon glyphicon-trash"></i>
-      </a>
-    </div>
-    <h3 style="color:#337ab7">Các loại rau của vườn:</h3
+  <h3 style="color:#337ab7">Các loại rau của vườn:</h3
     <md-table-container>
-      <table md-table style="color:#5d9842;">
-        <thead md-head md-order="" md-on-reorder="">
+    <table md-table style="color:#5d9842;">
+      <thead md-head md-order="" md-on-reorder="">
         <tr md-row>
           <th md-column md-order-by="" style="color:#5d9842;"><span>Tên sản phẩm</span></th>
           <!--<th md-column md-numeric md-order-by="" style="color:#5d9842;"><span>Số lượng</span></th>-->
         </tr>
-        </thead>
-        <tbody md-body>
+      </thead>
+      <tbody md-body>
         <tr md-row ng-repeat="item in vm.garden.vegetableList" ng-show="vm.garden.vegetableList">
           <td md-cell style="color:#5d9842;">{{item}}</td>
           <!--<td md-cell style="color:#5d9842;">{{item.quantity}}</td>-->
         </tr>
-        </tbody>
-      </table>
-    </md-table-container>
-  </div>
+      </tbody>
+    </table>
+  </md-table-container>
+</div>
+</md-tab>
+<md-tab label="Tổng hợp mùa vụ">
+<div class="col-md-4" style="margin-top: 20px" data-ng-show="vm.garden.isAdmin">
+  <a data-toggle="tooltip" title="Tạo mùa vụ mới" class="btn btn-primary"
+  ng-click="vm.createSeason();">
+  <i class="glyphicon glyphicon-plus"></i>
+</a>
+</div>
+<md-input-container>
+<input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Tìm kiếm"
+ng-change="vm.figureOutItemsToDisplay()"/>
+</md-input-container>
+<md-divider style="margin-bottom:30px;"></md-divider>
+<div class="list-group">
+  <a data-ng-repeat="season in vm.pagedItems"
+  ng-click="vm.gotoView(season._id)"
+  class="list-group-item">
+  <small class="list-group-item-text">
+    Đã tạo lúc
+    <span data-ng-bind="season.created | date:'mediumDate'"></span>
+  </small>
+  <h4 data-ng-bind="season.garden.name"></h4>
+  <h4 class="list-group-item-heading" data-ng-bind="season.name"></h4>
+</a>
+</div>
+<pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength"
+ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+</md-tab>
+</md-tabs>
 </section>

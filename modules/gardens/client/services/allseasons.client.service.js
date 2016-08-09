@@ -1,14 +1,13 @@
-
 (function () {
   'use strict';
 
   angular
-    .module('seasons')
-    .factory('SeasonsService', SeasonsService);
+    .module('gardens')
+    .factory('AllseasonsService', AllseasonsService);
 
-  SeasonsService.$inject = ['$resource'];
+  AllseasonsService.$inject = ['$resource'];
 
-  function SeasonsService($resource) {
+  function AllseasonsService($resource) {
     return $resource('api/seasons/:seasonId', {
       seasonId: '@_id'
     }, {

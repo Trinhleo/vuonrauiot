@@ -6,47 +6,47 @@
         .module('dbmanages')
         .controller('DbmanagesController', DbmanagesController);
 
-    DbmanagesController.$inject = ['$scope', '$state', 'Authentication', 'dbmanageResolve', 'DbgardensService', '$timeout', '$q', '$log'];
+    DbmanagesController.$inject = ['$scope', '$state', 'Authentication', 'dbmanageResolve','$timeout', '$q', '$log'];
 
-    function DbmanagesController($scope, $state, Authentication, dbmanage, DbgardensService, $timeout, $q) {
+    function DbmanagesController($scope, $state, Authentication, dbmanage,$timeout, $q) {
         var vm = this;
         vm.authentication = Authentication;
         vm.dbmanage = dbmanage;
-        DbgardensService.query(function (data) {
-            vm.gardens = data;
-            vm.repos = vm.loadAll();
-        });
-        vm.loadAll = function () {
-            var repos = (vm.gardens) ? vm.gardens : [];
-            return repos.map(function (repo) {
-                repo.value = repo.name.toLowerCase();
-                return repo;
-            });
-        }
-        vm.simulateQuery = true;
-        vm.querySearch = function (query) {
-            var results = query ? vm.repos.filter(vm.createFilterFor(query)) : vm.repos,
-                deferred;
-            if (vm.simulateQuery) {
-                deferred = $q.defer();
-                $timeout(function () {
-                    deferred.resolve(results);
-                }, Math.random() * 1000, false);
-                return deferred.promise;
-            } else {
-                return results;
-            }
-        }
+        // DbgardensService.query(function (data) {
+        //     vm.gardens = data;
+        //     vm.repos = vm.loadAll();
+        // });
+        // vm.loadAll = function () {
+        //     var repos = (vm.gardens) ? vm.gardens : [];
+        //     return repos.map(function (repo) {
+        //         repo.value = repo.name.toLowerCase();
+        //         return repo;
+        //     });
+        // }
+        // vm.simulateQuery = true;
+        // vm.querySearch = function (query) {
+        //     var results = query ? vm.repos.filter(vm.createFilterFor(query)) : vm.repos,
+        //         deferred;
+        //     if (vm.simulateQuery) {
+        //         deferred = $q.defer();
+        //         $timeout(function () {
+        //             deferred.resolve(results);
+        //         }, Math.random() * 1000, false);
+        //         return deferred.promise;
+        //     } else {
+        //         return results;
+        //     }
+        // }
 
-        /**
-         * Create filter function for a query string
-         */
-        vm.createFilterFor = function (query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(item) {
-                return (item.value.indexOf(lowercaseQuery) === 0);
-            };
-        }
+        // /**
+        //  * Create filter function for a query string
+        //  */
+        // vm.createFilterFor = function (query) {
+        //     var lowercaseQuery = angular.lowercase(query);
+        //     return function filterFn(item) {
+        //         return (item.value.indexOf(lowercaseQuery) === 0);
+        //     };
+        // }
 
         vm.error = null;
         vm.form = {};

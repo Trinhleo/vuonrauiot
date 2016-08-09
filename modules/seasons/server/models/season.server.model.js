@@ -6,9 +6,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-/**
- * Dbmanage Schema
- */
 var SeasonSchema = new Schema({
   name: {
     type: String,
@@ -27,6 +24,10 @@ var SeasonSchema = new Schema({
   garden: {
     type: Schema.ObjectId,
     ref: 'seasongardens'
+  },
+  status: {
+    type: Number,
+    default: 0
   },
   products: {
     type: Array,

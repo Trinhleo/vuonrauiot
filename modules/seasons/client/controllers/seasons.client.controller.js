@@ -28,7 +28,9 @@
         // vm.repos = vm.loadAll();
     }).$promise
         };
-
+        vm.goBack = function (){
+            $state.go($state.previous.state.name);
+        }
     //   vm.loadAll = function () {
     //     var repos = (vm.gardens) ? vm.gardens : [];
     //     return repos.map(function (repo) {

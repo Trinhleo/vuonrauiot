@@ -5,9 +5,9 @@
   angular
   .module('gardens')
   .controller('GardensController', GardensController);
-  GardensController.$inject = ['$scope', '$state', 'Authentication', 'gardenResolve'];
+  GardensController.$inject = ['$scope', '$state', 'Authentication', 'gardenResolve','$http','$filter'];
 
-  function GardensController ($scope, $state, Authentication, garden) {
+  function GardensController ($scope, $state, Authentication, garden,$http,$filter) {
     var vm = this;
     vm.authentication = Authentication;
     vm.garden = garden;
@@ -15,19 +15,38 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
-   
-    // vegetable choose
-   //  vm.quantityShow = function (item){
-   //   var idx = _.values(vm.selected).indexOf(name);
-   //   return vm.quantity[idx];
-   // }
-   // vm.quantityUpdate= function(quantity,name){
-   //  var idx =vm.selected.indexOf(name);
-   //  vm.quantity[idx]= quantity;
-   //    // vm.vegetableCategoryObj[idx]=quantity;
-   //
-   //  }
-   vm.createSeason = function () {
+    vm.createSeason = createSeason;
+    vm.gotoView = function(seasonId){
+      $state.go('seasons.view', {
+        seasonId: seasonId
+      })};
+      
+     $http.post('/api/gardenseasons',{garden:garden._id}).success(function (response) {
+                 vm.seasonsofGarden = response;
+                 vm.buildPager();
+            }).error(function (response) {
+                vm.error2 =  response.message;
+            });
+    vm.buildPager = function () {
+      vm.pagedItems = [];
+      vm.itemsPerPage = 5;
+      vm.currentPage = 1;
+      vm.figureOutItemsToDisplay();
+    };
+    vm.figureOutItemsToDisplay = function () {
+      vm.filteredItems = $filter('filter')(vm.seasonsofGarden, {
+        $: vm.search
+      });
+      vm.filterLength = vm.filteredItems.length;
+      var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+      var end = begin + vm.itemsPerPage;
+      vm.pagedItems = vm.filteredItems.slice(begin, end);
+    };
+    vm.pageChanged = function () {
+      vm.figureOutItemsToDisplay();
+    };
+
+   function createSeason() {
     $state.go('seasons.create',{gardenId:vm.garden._id});
    }
     vm.vegetableCategory = [
