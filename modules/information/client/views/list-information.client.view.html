@@ -1,21 +1,27 @@
 <section>
   <div class="page-header">
     <h1>Thông tin rau quả</h1>
-    <div class="col-md-4" style="margin-top: 2em">
-    <input class="form-control col-md-4" type="text" ng-model="search" placeholder="Tìm kiếm" ng-change="figureOutItemsToDisplay()" />
-    </div>
-    <a data-ng-repeat="information in vm.information"
-    data-ui-sref="information.view({ informationId: information._id })"
-    class="list-group-item">
-    <small class="list-group-item-text">
-      Cập nhật vào
-      <span data-ng-bind="information.created | date:'mediumDate'"></span>
-    </small>
-    <h4 class="list-group-item-heading" data-ng-bind="information.name"></h4>
-  </a>
-</div>
+  </div>
+  <md-input-container>
+  <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Tìm kiếm"
+  ng-change="vm.figureOutItemsToDisplay()"/>
+</md-input-container>
+<md-divider style="margin-bottom:30px;"></md-divider>
+<div class="list-group">
+  <a data-ng-repeat="information in vm.pagedItems"
+  data-ui-sref="information.view({ informationId: information._id })"
+  class="list-group-item">
+    <h4 class="list-group-item-heading" data-ng-bind="information.vegetableName"></h4>
+  <small class="list-group-item-text">
+    Ngày thu hoạch:
+    <span data-ng-bind="information.endDate | date:'short'"></span>
+    <span ng-show="!information.isHarvested">(Dự kiến)</span>
+  </small>
+</a>
 <div class="alert alert-warning text-center" data-ng-if="vm.information.$resolved && !vm.information.length">
   Không có dữ liệu!
 </div>
-<pagination boundary-links="true" max-size="8" items-per-page="itemsPerPage" total-items="filterLength" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+</div>
+<pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()">
+</pagination>
 </section>

@@ -1,12 +1,12 @@
 <section>
   <div class="page-header">
     <h1>Danh sách mùa vụ</h1>
-    <div class="col-md-4" style="margin-top: 20px">
+    <!-- <div class="col-md-4" style="margin-top: 20px">
       <a data-toggle="tooltip" title="Tạo mùa vụ mới" class="btn btn-primary"
          data-ui-sref="seasons.create">
         <i class="glyphicon glyphicon-plus"></i>
       </a>
-    </div>
+    </div> -->
     <div  class="col-md-4">
       <md-input-container>
         <input class="form-control" type="text" ng-model="vm.search2" placeholder="Tìm kiếm"
@@ -20,7 +20,7 @@
          class="list-group-item">
         <small>
           Tạo lúc
-          <span data-ng-bind="season.created | date:'mediumDate'"></span>
+          <span data-ng-bind="season.created | date:'short'"></span>
         </small>
         <h4 data-ng-bind="season.garden.name"></h4>
         <h4 data-ng-bind="season.name"></h4>

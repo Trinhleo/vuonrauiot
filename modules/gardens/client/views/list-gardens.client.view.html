@@ -24,7 +24,7 @@ ng-change="vm.figureOutItemsToDisplay()"/>
   class="list-group-item">
   <small class="list-group-item-text">
     Đã tạo lúc
-    <span data-ng-bind="garden.created | date:'mediumDate'"></span>
+    <span data-ng-bind="garden.created | date:'short'"></span>
     chủ vườn:
     <span data-ng-if="garden.user" data-ng-bind="garden.user.displayName"></span>
     <span data-ng-if="!garden.user">Người dùng đã bị xóa</span>
@@ -51,7 +51,7 @@ ng-change="vm.figureOutItemsToDisplay2()"/>
   class="list-group-item">
   <small class="list-group-item-text">
     Đã tạo lúc
-    <span data-ng-bind="season.created | date:'mediumDate'"></span>
+    <span data-ng-bind="season.created | date:'short'"></span>
   </small>
   <h4 data-ng-bind="season.garden.name"></h4>
   <h4 class="list-group-item-heading" data-ng-bind="season.name"></h4>

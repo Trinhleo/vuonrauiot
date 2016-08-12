@@ -3,10 +3,10 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+ var mongoose = require('mongoose'),
+ Schema = mongoose.Schema;
 
-var SeasonSchema = new Schema({
+ var SeasonSchema = new Schema({
   name: {
     type: String,
     default: '',
@@ -29,24 +29,35 @@ var SeasonSchema = new Schema({
     type: Number,
     default: 0
   },
-  products: {
-    type: Array,
-    items: {
-      type: Object,
-      properties: {
-        "name": {
-          type: String
-        },
-        "quantity": {
-          type: Number,
-          default: 0,
-          min: 0
-        }
-      }
-    }
+  vegetableName: {
+    type: String,
+    trim: true
+  },
+  startDate : {
+    type: Date
+  },
+  endDate : {
+    type: Date
+  },
+  seedQuantity: {
+    type: Number,
+    default: 0,
+    max : 10000
+  },
+  fertilizer1Date : {
+    type: Date
+  },
+  fertilizer2Date : {
+    type: Date
+  },
+  wateringHistory: {
+   type: Array,
+   items: {
+    type: Date
   }
+}
 });
-var GardenSchema = new Schema({
+ var GardenSchema = new Schema({
   name: {
     type: String,
     default: '',
@@ -85,7 +96,7 @@ var GardenSchema = new Schema({
     }
   }
 });
-mongoose.model('seasongardens',
-    GardenSchema,
-    'gardens');
-mongoose.model('Season', SeasonSchema);
+ mongoose.model('seasongardens',
+  GardenSchema,
+  'gardens');
+ mongoose.model('Season', SeasonSchema);

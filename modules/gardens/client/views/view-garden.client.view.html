@@ -18,7 +18,7 @@
    <small>
     <em class="text-muted">
       Đã tạo lúc
-      <span data-ng-bind="vm.garden.created | date:'mediumDate'"></span> <br>
+      <span data-ng-bind="vm.garden.created | date:'short'"></span> <br>
       Chủ vườn:
       <span data-ng-if="vm.garden.user"
       data-ng-bind="vm.garden.user.displayName"></span>
@@ -27,7 +27,7 @@
   </small>
 </div>
 <md-tabs md-dynamic-height md-border-bottom>
-<md-tab label="Danh sách vườn rau">
+<md-tab label="Chi tiết vườn rau">
 <div>
   <div class="pull-right" data-ng-show="vm.garden.isAllow">
     <a class="btn btn-primary" data-ui-sref="gardens.edit({ gardenId: vm.garden._id })">
@@ -74,7 +74,7 @@ ng-change="vm.figureOutItemsToDisplay()"/>
   class="list-group-item">
   <small class="list-group-item-text">
     Đã tạo lúc
-    <span data-ng-bind="season.created | date:'mediumDate'"></span>
+    <span data-ng-bind="season.created | date:'short'"></span>
   </small>
   <h4 data-ng-bind="season.garden.name"></h4>
   <h4 class="list-group-item-heading" data-ng-bind="season.name"></h4>

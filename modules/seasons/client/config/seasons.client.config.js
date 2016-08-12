@@ -22,10 +22,10 @@
     });
 
     // Add the dropdown create item
-    Menus.addSubMenuItem('topbar', 'gardens', {
-      title: 'Tạo mùa vụ',
-      state: 'seasons.create',
-      roles: ['admin']
-    });
+    // Menus.addSubMenuItem('topbar', 'gardens', {
+    //   title: 'Tạo mùa vụ',
+    //   state: 'seasons.create',
+    //   roles: ['admin']
+    // });
   }
 })();

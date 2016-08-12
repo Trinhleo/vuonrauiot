@@ -11,6 +11,18 @@ var path = require('path'),
 exports.create = function (req, res) {
     var season = new Season(req.body);
     // season.user = req.user;
+    var startDate = Date.parse(season.startDate);
+    var endDate =  Date.parse(season.endDate);
+    var datediff = endDate-startDate;
+    console.log(datediff);
+    if(datediff>777600000){
+    var fertilizer1Date= new Date(startDate+datediff/2);
+    var fertilizer2Date= new Date(endDate-datediff/5);
+    season.fertilizer1Date = fertilizer1Date;
+    season.fertilizer2Date = fertilizer2Date;
+    console.log( season.fertilizer1Date);
+    console.log( season.fertilizer2Date);
+     }
 
     season.save(function (err) {
         if (err) {

@@ -8,14 +8,16 @@
    </ol>
     <h1 data-ng-bind="vm.season.garden.name"></h1>
     <h1 data-ng-bind="vm.season.name"></h1>
-    <h1>Status: {{vm.season.status}}</h1>
   </div>
+  <h1>Sản phẩm: {{vm.season.vegetableName}}</h1>
+    <h2>Ngày bắt đầu: {{vm.season.startDate| date:'short'}}</h1>
+    <h2>Ngày kết thúc: {{vm.season.endDate| date:'short'}}</h1>
   <div class="pull-right"
        data-ng-show="vm.season.isCurrentUserOwner">
-    <a class="btn btn-primary"
+   <!--  <a class="btn btn-primary"
        data-ui-sref="seasons.edit({ seasonId: vm.season._id })">
       <i class="glyphicon glyphicon-edit"></i>
-    </a>
+    </a> -->
     <a class="btn btn-primary" data-ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
@@ -23,7 +25,7 @@
   <small>
     <em class="text-muted">
      Đã tạo lúc
-      <span data-ng-bind="vm.season.created | date:'mediumDate'"></span>
+      <span data-ng-bind="vm.season.created | date:'short'"></span>
     </em>
   </small>
   <p class="lead" data-ng-bind="vm.season.content"></p>

@@ -25,54 +25,54 @@
           },function (data) {
             vm.garden = data;
             vm.season.garden = vm.garden;
-        // vm.repos = vm.loadAll();
+            // vm.repos = vm.loadAll();
     }).$promise
-        };
+        } 
         vm.goBack = function (){
             $state.go($state.previous.state.name);
         }
-    //   vm.loadAll = function () {
-    //     var repos = (vm.gardens) ? vm.gardens : [];
-    //     return repos.map(function (repo) {
-    //         repo.value = repo.name.toLowerCase();
-    //         return repo;
-    //     });
-    // }
-    // vm.simulateQuery = true;
-    // vm.querySearch = function (query) {
-    //     var results = query ? vm.repos.filter(vm.createFilterFor(query)) : vm.repos,
-    //     deferred;
-    //     if (vm.simulateQuery) {
-    //         deferred = $q.defer();
-    //         $timeout(function () {
-    //             deferred.resolve(results);
-    //         }, Math.random() * 1000, false);
-    //         return deferred.promise;
-    //     } else {
-    //         return results;
-    //     }
-    // }
+        // vm.loadAll = function () {
+        //     var repos = (vm.garden.vegetableList) ? vm.garden.vegetableList : [];
+        //     return repos.map(function (repo) {
+        //         repo.value = repo.name.toLowerCase();
+        //         return repo;
+        //     });
+        // }
+        vm.simulateQuery = false;
+        vm.querySearch = function (query) {
+            var results = query ? vm.garden.vegetableList.filter(vm.createFilterFor(query)) : vm.garden.vegetableList,
+            deferred;
+            if (vm.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function () {
+                    deferred.resolve(results);
+                }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return results;
+            }
+        }
 
-    //     /**
-    //      * Create filter function for a query string
-    //      */
-    //      vm.createFilterFor = function (query) {
-    //         var lowercaseQuery = angular.lowercase(query);
-    //         return function filterFn(item) {
-    //             return (item.value.indexOf(lowercaseQuery) === 0);
-    //         };
-    //     }
+        /**
+         * Create filter function for a query string
+         */
+         vm.createFilterFor = function (query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(item) {
+                return (item.value.indexOf(lowercaseQuery) === 0);
+            };
+        }
 
 
-    //     /**
-    //      * Create filter function for a query string
-    //      */
-    //      vm.createFilterFor = function (query) {
-    //         var lowercaseQuery = angular.lowercase(query);
-    //         return function filterFn(item) {
-    //             return (item.value.indexOf(lowercaseQuery) === 0);
-    //         };
-    //     }
+        /**
+         * Create filter function for a query string
+         */
+         vm.createFilterFor = function (query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(item) {
+                return (item.value.indexOf(lowercaseQuery) === 0);
+            };
+        }
         // Remove existing Season
         function remove() {
             if (confirm('Bạn có muốn xóa mùa vụ hay không?')) {
