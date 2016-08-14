@@ -108,7 +108,7 @@
       return next(err);
     } else if (!article) {
       return res.status(404).send({
-        message: 'No Article with that identifier has been found'
+        message: 'Không tìm thấy bài viết'
       });
     }
     req.article = article;

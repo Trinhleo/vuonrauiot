@@ -20,9 +20,6 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/seasons/:seasonId',
       permissions: '*'
-    },{
-      resources: '/api/gardenseasons',
-      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -31,9 +28,6 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/seasons/:seasonId',
-      permissions: ['get']
-    },{
-      resources: '/api/gardenseasons',
       permissions: ['get']
     }]
   }, {

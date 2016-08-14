@@ -11,9 +11,6 @@
   app.route('/api/seasons').all(seasonsPolicy.isAllowed)
   .get(seasons.list)
   .post(seasons.create);
-  app.route('/api/gardenseasons').all(seasonsPolicy.isAllowed)
-  .post(seasons.listByGardenId);
-
   app.route('/api/seasons/:seasonId').all(seasonsPolicy.isAllowed)
   .get(seasons.read)
   .put(seasons.update)

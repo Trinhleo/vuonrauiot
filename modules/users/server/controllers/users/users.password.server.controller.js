@@ -162,12 +162,12 @@ exports.reset = function (req, res, next) {
             });
           } else {
             return res.status(400).send({
-              message: 'Passwords do not match'
+              message: 'Mật khẩu không khớp'
             });
           }
         } else {
           return res.status(400).send({
-            message: 'Password reset token is invalid or has expired.'
+            message: 'Thời hạn đặt lại mật khẩu đã hết'
           });
         }
       });
@@ -185,7 +185,7 @@ exports.reset = function (req, res, next) {
       var mailOptions = {
         to: user.email,
         from: config.mailer.from,
-        subject: 'Your password has been changed',
+        subject: 'Mật khẩu của bạn đã được thay đổi thành công',
         html: emailHTML
       };
 
@@ -227,7 +227,7 @@ exports.changePassword = function (req, res, next) {
                       res.status(400).send(err);
                     } else {
                       res.send({
-                        message: 'Password changed successfully'
+                        message: 'Thay đổi mật khẩu thành công'
                       });
                     }
                   });
@@ -235,28 +235,28 @@ exports.changePassword = function (req, res, next) {
               });
             } else {
               res.status(400).send({
-                message: 'Passwords do not match'
+                message: 'Mật khẩu không khớp'
               });
             }
           } else {
             res.status(400).send({
-              message: 'Current password is incorrect'
+              message: 'Mật khẩu hiện tại không khớp'
             });
           }
         } else {
           res.status(400).send({
-            message: 'User is not found'
+            message: 'Người dùng không tồn tại'
           });
         }
       });
     } else {
       res.status(400).send({
-        message: 'Please provide a new password'
+        message: 'Hãy cung cấp mật khẩu mới'
       });
     }
   } else {
     res.status(400).send({
-      message: 'User is not signed in'
+      message: 'Người dùng chưa đăng nhập'
     });
   }
 };

@@ -3,17 +3,23 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+ var mongoose = require('mongoose'),
+ Schema = mongoose.Schema;
 
 /**
  * Article Schema
  */
-var ArticleSchema = new Schema({
+ var ArticleSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Article name',
+    required: 'Hãy nhập tiêu đề',
+    trim: true
+  },
+  content:{
+    type: String,
+    default: '',
+    required: 'Hãy nhập nội dung',
     trim: true
   },
   created: {
@@ -26,4 +32,4 @@ var ArticleSchema = new Schema({
   }
 });
 
-mongoose.model('Article', ArticleSchema);
+ mongoose.model('Article', ArticleSchema);

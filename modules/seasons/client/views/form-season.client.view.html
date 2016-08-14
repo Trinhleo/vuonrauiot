@@ -56,7 +56,7 @@
 </md-datepicker> <span ng-show="vm.season._id">{{vm.season.startDate| date:'short'}}</span>
 </div>
 <div class="form-group">
-  <md-datepicker name="enddate"  ng-disabled="vm.season._id" ng-model="vm.season.endDate" md-placeholder="Ngày kết thúc" md-min-date="vm.season.startDate" md-open-on-focus  required>
+  <md-datepicker ng-show="!vm.season._id" name="enddate"  ng-disabled="vm.season._id" ng-model="vm.season.endDate" md-placeholder="Ngày kết thúc" md-min-date="vm.season.startDate" md-open-on-focus  required>
 </md-datepicker> <span ng-show="vm.season._id">{{vm.season.endDate| date:'short'}}</span>
 </div>
 

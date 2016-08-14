@@ -1,19 +1,26 @@
 <section>
   <div class="page-header">
-    <h1>{{vm.article._id ? 'Edit Article' : 'New Article'}}</h1>
+    <h1>{{vm.article._id ? 'Chỉnh sửa bài viết' : 'Viết bài'}}</h1>
   </div>
   <div class="col-md-12">
     <form name="vm.form.articleForm" class="form-horizontal" ng-submit="vm.save(vm.form.articleForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.article.name" id="name" class="form-control" placeholder="Name" required>
+          <label class="control-label" for="name">Tiêu đề</label>
+          <input name="name" type="text" ng-model="vm.article.name" id="name" class="form-control" placeholder="Tiêu đề" required>
           <div ng-messages="vm.form.articleForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Article name is required.</p>
+            <p class="help-block error-text" ng-message="required">Tiêu đề là bắt buộc.</p>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.article._id ? 'Update' : 'Create'}}</button>
+          <div class="form-group" show-errors>
+          <label class="control-label" for="name">Nội dung</label>
+          <textarea rows="20" name="name" type="text" ng-model="vm.article.content" id="name" class="form-control" placeholder="Nội dung" required></textarea>
+          <div ng-messages="vm.form.articleForm.content.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nội dung là bắt buộc.</p>
+          </div>
+        </div>
+        <div class="form-group" >
+          <button type="submit" class="btn btn-default">{{vm.article._id ? 'Cập nhật' : 'Đăng'}}</button>
         </div>
         <div ng-show="vm.error" class="text-danger">
           <strong ng-bind="vm.error"></strong>

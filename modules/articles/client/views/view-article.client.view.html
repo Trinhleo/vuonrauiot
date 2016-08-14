@@ -14,12 +14,12 @@
   </div>
   <small>
     <em class="text-muted">
-      Posted on
+      Đăng lúc
       <span data-ng-bind="vm.article.created | date:'short'"></span>
       by
       <span data-ng-if="vm.article.user"
             data-ng-bind="vm.article.user.displayName"></span>
-      <span data-ng-if="!vm.article.user">Deleted User</span>
+      <span data-ng-if="!vm.article.user">Người dùng đã bị xóa</span>
     </em>
   </small>
   <p class="lead" data-ng-bind="vm.article.content"></p>

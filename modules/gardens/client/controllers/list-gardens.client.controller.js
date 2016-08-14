@@ -5,17 +5,19 @@
 	.module('gardens')
 	.controller('GardensListController', GardensListController);
 
-	GardensListController.$inject = ['GardensService','AllseasonsService','$filter','$state'];
+	GardensListController.$inject = ['GardensService','$filter','$state'];
 
-	function GardensListController(GardensService,AllseasonsService,$filter,$state) {
+	function GardensListController(GardensService,$filter,$state) {
 		var vm = this;
 		vm.gotoView = function(seasonId){
 			$state.go('seasons.view', {
 				seasonId: seasonId
 			})};
 		GardensService.query(function (data) {
-			vm.gardens = data;
+			vm.gardens = data[0].gardens;
+			vm.seasons = data[0].seasons;
 			vm.buildPager();
+			vm.buildPager2();
 		});
 		vm.buildPager = function () {
 			vm.pagedItems = [];
@@ -35,10 +37,10 @@
 		vm.pageChanged = function () {
 			vm.figureOutItemsToDisplay();
 		};
-		AllseasonsService.query(function (data) {
-			vm.seasons = data;
-			vm.buildPager2();
-		});
+		// AllseasonsService.query(function (data) {
+		// 	vm.seasons = data;
+		// 	vm.buildPager2();
+		// });
 		vm.buildPager2 = function () {
 			vm.pagedItems2 = [];
 			vm.itemsPerPage2 = 5;

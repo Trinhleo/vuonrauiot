@@ -75,10 +75,6 @@
     type: Date,
     default: Date.now
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   vegetableList: {
     type: Array,
     items: {

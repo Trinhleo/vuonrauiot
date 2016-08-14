@@ -11,6 +11,7 @@
     var vm = this;
     vm.authentication = Authentication;
     vm.garden = garden;
+    vm.gardenSeasons = vm.garden.seasons;
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
@@ -20,44 +21,37 @@
       $state.go('seasons.view', {
         seasonId: seasonId
       })};
-      
-     $http.post('/api/gardenseasons',{garden:garden._id}).success(function (response) {
-                 vm.seasonsofGarden = response;
-                 vm.buildPager();
-            }).error(function (response) {
-                vm.error2 =  response.message;
-            });
-    vm.buildPager = function () {
-      vm.pagedItems = [];
-      vm.itemsPerPage = 5;
-      vm.currentPage = 1;
-      vm.figureOutItemsToDisplay();
-    };
-    vm.figureOutItemsToDisplay = function () {
-      vm.filteredItems = $filter('filter')(vm.seasonsofGarden, {
-        $: vm.search
-      });
-      vm.filterLength = vm.filteredItems.length;
-      var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
-      var end = begin + vm.itemsPerPage;
-      vm.pagedItems = vm.filteredItems.slice(begin, end);
-    };
-    vm.pageChanged = function () {
-      vm.figureOutItemsToDisplay();
-    };
+      vm.buildPager = function () {
+        vm.pagedItems = [];
+        vm.itemsPerPage = 5;
+        vm.currentPage = 1;
+        vm.figureOutItemsToDisplay();
+      };
+      vm.figureOutItemsToDisplay = function () {
+        vm.filteredItems = $filter('filter')(vm.gardenSeasons, {
+          $: vm.search
+        });
+        vm.filterLength = vm.filteredItems.length;
+        var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+        var end = begin + vm.itemsPerPage;
+        vm.pagedItems = vm.filteredItems.slice(begin, end);
+      };
+      vm.pageChanged = function () {
+        vm.figureOutItemsToDisplay();
+      };
+      vm.buildPager();
+      function createSeason() {
+        $state.go('seasons.create',{gardenId:vm.garden._id});
+      }
+      vm.vegetableCategory = [
+      "Cải bắp","Cải ngọt","Cà rốt","Khoai tây","Xà lách"
+      ];
 
-   function createSeason() {
-    $state.go('seasons.create',{gardenId:vm.garden._id});
-   }
-    vm.vegetableCategory = [
-    "Cải bắp","Cải ngọt","Cà rốt","Khoai tây","Xà lách"
-    ];
-
-    if (vm.garden._id){
-      vm.garden.vegetableList = garden.vegetableList;
-      vm.selected = vm.garden.vegetableList;
-   } else
-   {
+      if (vm.garden._id){
+        vm.garden.vegetableList = garden.vegetableList;
+        vm.selected = vm.garden.vegetableList;
+      } else
+      {
     // vm.garden.vegetableList=[];
     vm.selected = [];
   }

@@ -20,7 +20,7 @@
 
     // Remove existing Article
     function remove() {
-      if (confirm('Are you sure you want to delete?')) {
+      if (confirm('Bạn có muốn xóa bài?')) {
         vm.article.$remove($state.go('articles.list'));
       }
     }

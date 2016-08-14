@@ -22,7 +22,7 @@ module.exports = function () {
       }
       if (!user || !user.authenticate(password)) {
         return done(null, false, {
-          message: 'Invalid username or password'
+          message: 'Sai tên đăng nhập hoặc mật khẩu!'
         });
       }
 

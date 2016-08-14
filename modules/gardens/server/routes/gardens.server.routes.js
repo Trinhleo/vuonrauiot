@@ -15,6 +15,7 @@
   .get(gardens.read)
   .put(gardens.update)
   .delete(gardens.delete);
+  app.route('/api/gardens/:gardenId').all(gardensPolicy.isAllowed)
 
   // Finish by binding the Garden middleware
   app.param('gardenId', gardens.gardenByID);
