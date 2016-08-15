@@ -23,13 +23,17 @@
     required: 'Hãy nhập địa chỉ vườn',
     trim: true
   },
-    area: {
-        type: Number,
-        default: 0.00,
-        min: 0.00,
-        max:1000000,
-        required: 'Hãy nhập diên tích vườn',
-    },
+  area: {
+    type: Number,
+    default: 0.00,
+    min: 0.00,
+    max:1000000,
+    required: 'Hãy nhập diên tích vườn',
+  },
+  imgUrl: {
+    type: String,
+    default: 'modules/gardens/client/img/gardens/no-images.png'
+  },
   created: {
     type: Date,
     default: Date.now

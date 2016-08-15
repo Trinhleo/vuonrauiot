@@ -1,8 +1,12 @@
- h1{
+h1,h2{
   color:#5d9842;
 };
 h3{
   color:#337ab7;
+}
+img{
+  max-height:200px;
+  max-width:200px;
 }
 .content {
   margin-top: 50px;

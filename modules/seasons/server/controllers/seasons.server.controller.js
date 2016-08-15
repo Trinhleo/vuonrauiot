@@ -22,6 +22,25 @@ cron.schedule('* * * * *', function(){
 });
 
 });
+// check status realtime;
+setInterval(myTimer, 1000);
+function myTimer() {
+    Season.find().sort('-created').populate('garden', 'name').exec(function (err, seasons) {
+        if (err) {
+            ;
+        } else {
+            var ss = seasons;
+            for(var i in ss){
+                var dateNow = new Date();
+                if(ss[i].endDate<=dateNow){
+                   var season = ss[i];
+                   season.status = 2;
+                   season.save();
+               }
+           }
+       }
+   });
+};
 var checkName = function (gardenId,name){
   var rs = true;
   Season.find({garden:gardenId}).sort('-created').exec(function (err, seasons) {

@@ -14,7 +14,10 @@
    <i>Địa Chỉ: </i>
    <small data-ng-bind="vm.garden.address"></small> <br>
    <i>Diện tích:</i>
-   {{vm.garden.area}}<small> m<sup>2</small> <br>
+   {{vm.garden.area}}<small> m<sup>2</small>
+   <img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
+   <span style="color: red" ng-show="season.status===2">Đã kết thúc</span>
+   <br>
    <small>
     <em class="text-muted">
       Đã tạo lúc

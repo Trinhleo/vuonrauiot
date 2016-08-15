@@ -39,7 +39,9 @@
       vm.pageChanged = function () {
         vm.figureOutItemsToDisplay();
       };
-      vm.buildPager();
+      if(vm.garden.seasons){
+        vm.buildPager();
+      }
       function createSeason() {
         $state.go('seasons.create',{gardenId:vm.garden._id});
       }

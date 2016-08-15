@@ -74,6 +74,10 @@
     type: Schema.ObjectId,
     ref: 'User'
   },
+   imgUrl: {
+    type: String,
+    default: 'modules/gardens/client/img/gardens/no-image.png'
+  },
   vegetableList: {
     type: Array,
     items: {

@@ -108,6 +108,15 @@
       }
     });
   } else {
+    var ss = [];
+    GardenSeason.find().sort('-created').populate('garden', 'name').exec(function(err, gardenSeasons) {
+      if (err) {
+       ;
+     } else {
+      ss = gardenSeasons;
+    }
+  });
+
     Garden.find({user:currentUserid}).sort('-created').populate('user', 'displayName').exec(function(err, gardens) {
       if (err) {
         return res.status(400).send({
@@ -116,24 +125,26 @@
       } else {
         var data = [];
         var list ={}
-        var gardenSeasons = [];
-        // var gd = gardens;
-        // for (var i in gd) {
-        //   GardenSeason.find({garden: gardens[i]._id}).sort('-created').populate('garden', 'name').exec(function(err, gardenSeasons) {
-        //     if (err) {
-        //      ;
-        //    } else {    
-        //     seasons = gardenSeasons.concat(seasons);
-        //     console.log("3"+seasons);
-        //   };
-        // });
-        // };
-        list.gardens = gardens;
-          // list.seasons = seasons;
-          data.push(list);
-          res.jsonp(data);
+        var gd = gardens;
+        var gardenIdList = [];
+        for(var i in gd){
+            gardenIdList.push(gd[i]._id);
+            console.log(gardenIdList);
+        }
+        for (var i in ss) {
+           console.log(i);
+       
+          if(gardenIdList.indexOf(ss[i].garden._id)===true){
+            console.log(ss[i].garden._id);
+            seasons.push(ss[i]);
+          }
         };
-      });
+        list.seasons = seasons;
+        list.gardens = gardens; 
+        data.push(list);
+        res.jsonp(data);
+      };
+    });
   }
 };
 

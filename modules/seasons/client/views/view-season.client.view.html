@@ -6,13 +6,10 @@
 <!--       <li><a ng-click="vm.goBack();">Chi tiết vườn rau</a></li> -->
      <li class ="active">Chi tiết mùa vụ</li>
    </ol>
-    <h1 data-ng-bind="vm.season.garden.name"></h1>
-    <h1 data-ng-bind="vm.season.name"></h1>
+   <h1> Vườn rau: {{vm.season.garden.name}}</h1>
+    <h2 data-ng-bind="vm.season.name"></h2>
   </div>
-  <h1>Sản phẩm: {{vm.season.vegetableName}}</h1>
-    <h2>Ngày bắt đầu: {{vm.season.startDate| date:'short'}}</h1>
-    <h2>Ngày kết thúc: {{vm.season.endDate| date:'short'}}</h1>
-  <div class="pull-right"
+   <div class="pull-right"
        data-ng-show="vm.season.isCurrentUserOwner">
    <!--  <a class="btn btn-primary"
        data-ui-sref="seasons.edit({ seasonId: vm.season._id })">
@@ -22,11 +19,31 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <small>
+  <h2><span style="color:#337ab7">Sản phẩm:</span>{{vm.season.vegetableName}}</h2>
+    <h3><span style="color:#337ab7">Ngày bắt đầu: </span>{{vm.season.startDate| date:'short'}} &nbsp&nbsp<span style="color:#337ab7">Ngày kết thúc:</span> {{vm.season.endDate| date:'short'}}</h3>
+     <span style="color: red" ng-show="season.status===2">Đã kết thúc</span>
+  <!-- <small>
     <em class="text-muted">
      Đã tạo lúc
       <span data-ng-bind="vm.season.created | date:'short'"></span>
     </em>
-  </small>
-  <p class="lead" data-ng-bind="vm.season.content"></p>
+  </small> -->
+  <h2>Lịch sử tưới nước</h2>
+ <md-table-container>
+    <table md-table style="color:#5d9842;">
+      <thead md-head md-order="" md-on-reorder="">
+        <tr md-row>
+          <th md-column style="color:#5d9842;"><span>Thời gian</span></th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="item in vm.pagedItems" ng-show="vm.season.wateringHistory">
+          <td md-cell style="color:#5d9842;">{{item}}</td>
+          <!--<td md-cell style="color:#5d9842;">{{item.quantity}}</td>-->
+        </tr>
+      </tbody>
+    </table>
+     <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength"
+                ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+  </md-table-container>
 </section>

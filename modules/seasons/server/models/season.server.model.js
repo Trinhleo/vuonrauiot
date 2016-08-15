@@ -75,6 +75,10 @@
     type: Date,
     default: Date.now
   },
+   imgUrl: {
+    type: String,
+    default: 'modules/gardens/client/img/gardens/no-image.png'
+  },
   vegetableList: {
     type: Array,
     items: {

@@ -10,12 +10,24 @@ var mongoose = require('mongoose'),
  * Dbmanage Schema
  */
 var DbmanageSchema = new Schema({
+	vegetableCategory: {
+    type: Array,
+    items: {
+      type: Object,
+      properties: {
+      	 "id":{
+      	 	type: String
+      	 },
+         "name": {
+          type: String
+        },
+        "imgUrl": {
+          type: String,
+          default: 'modules/dbmanages/client/img/vegetable/no-images.png'
+        }
+      }
+    }
+  }
 
 });
-var GardenSchema = new Schema({
-   
-});
-mongoose.model('Dbgardens',
-    GardenSchema,
-    'gardens');
 mongoose.model('Dbmanage', DbmanageSchema);

@@ -17,7 +17,7 @@
     // });
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'gardens', {
-      title: 'Danh sách mùa vụ',
+      title: 'Quản lý mùa vụ',
       state: 'seasons.list'
     });
 

@@ -15,7 +15,7 @@
   <small class="list-group-item-text">
     Ngày thu hoạch:
     <span data-ng-bind="information.endDate | date:'short'"></span>
-    <span ng-show="!information.isHarvested">(Dự kiến)</span>
+    <span ng-show="information.status!=2">(Dự kiến)</span>
   </small>
 </a>
 <div class="alert alert-warning text-center" data-ng-if="vm.information.$resolved && !vm.information.length">
