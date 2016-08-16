@@ -40,7 +40,7 @@
         <label class="control-label">Chọn loại rau củ quả của vườn</label>
       </div>
       <div layout="row" layout-wrap flex>
-        <div flex-xs flex="50">
+        <div flex-xs flex="50" ng-if="vm.contentLoad">
           <md-checkbox aria-label="Chọn Tất Cả"
           ng-checked="vm.isChecked()"
           md-indeterminate="vm.isIndeterminate()"
@@ -48,9 +48,9 @@
           <span ng-if="vm.isChecked()">Bỏ </span>Chọn Tất Cả
         </md-checkbox>
       </div>
-      <div class="choose-vegetable" flex="100" ng-repeat="item in vm.vegetableCategory">
-        <md-checkbox ng-checked="vm.exists(item, vm.selected)" ng-click="vm.toggle(item,vm.selected)">
-        {{item}}
+      <div class="choose-vegetable" flex="100" ng-repeat="item in vm.vegetable" ng-if="vm.contentLoad" >
+        <md-checkbox ng-checked="vm.exists(item.name, vm.selectedName)" ng-click="vm.toggle(item,vm.selectedName,vm.selected)">
+        {{item.name}}
       </md-checkbox>
     </div>
   </div>

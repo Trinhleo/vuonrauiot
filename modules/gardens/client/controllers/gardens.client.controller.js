@@ -5,12 +5,12 @@
   angular
   .module('gardens')
   .controller('GardensController', GardensController);
-  GardensController.$inject = ['$scope', '$state', 'Authentication', 'gardenResolve','$http','$filter'];
+  GardensController.$inject = ['$scope', '$state', 'Authentication', 'gardenResolve','$http','$filter','VegetableCatService'];
 
-  function GardensController ($scope, $state, Authentication, garden,$http,$filter) {
+  function GardensController ($scope, $state, Authentication, garden,$http,$filter,VegetableCatService) {
     var vm = this;
     vm.authentication = Authentication;
-    vm.garden = garden;
+    vm.garden = garden?garden:[];
     vm.gardenSeasons = vm.garden.seasons;
     vm.error = null;
     vm.form = {};
@@ -45,46 +45,57 @@
       function createSeason() {
         $state.go('seasons.create',{gardenId:vm.garden._id});
       }
-      vm.vegetableCategory = [
-      "Cải bắp","Cải ngọt","Cà rốt","Khoai tây","Xà lách"
-      ];
 
+        VegetableCatService.query(function (data) {
+          vm.vegetable = data?data:[];
+          vm.vegetableCategory= [];
+          for(var x=0;x <  vm.vegetable.length;x++){
+           vm.vegetableCategory.push(vm.vegetable[x].name);
+         }
+         vm.contentLoad =vm.vegetableCategory?true:false;
+       });
       if (vm.garden._id){
         vm.garden.vegetableList = garden.vegetableList;
         vm.selected = vm.garden.vegetableList;
-      } else
-      {
-    // vm.garden.vegetableList=[];
-    vm.selected = [];
-  }
-
-  vm.toggle = function (item, list) {
-    var idx = list.indexOf(item);
-    if (idx > -1) {
-      list.splice(idx, 1);
+         vm.selectedName = [];
+        for(var x in vm.selected){
+         vm.selectedName.push(vm.selected[x].name);
+       }
+     } else {
+      vm.selectedName = [];
+      vm.selected = [];
     }
-    else {
-      list.push(item);
+    vm.toggle = function (item, selectedName,selected) {
+      var idx = selectedName.indexOf(item.name);
+      if (idx > -1) {
+        selectedName.splice(idx, 1);
+        selected.splice(idx,1);
+      }
+      else {
+        selectedName.push(item.name);
+        selected.push(item)
+      }
+    };
+    vm.exists = function (item, list) {
+     return list.indexOf(item) > -1;
+   };
+
+   vm.isIndeterminate = function() {
+    return (vm.selectedName.length !== 0 &&
+      vm.selectedName.length !== vm.vegetableCategory.length);
+  };
+  vm.isChecked = function() {
+    return vm.selectedName.length === vm.vegetableCategory.length;
+  }
+  vm.toggleAll = function() {
+    if (vm.selectedName.length === vm.vegetableCategory.length) {
+      vm.selectedName = [];
+      vm.selected = [];
+    } else if (vm.selectedName.length === 0 || vm.selectedName.length > 0) {
+      vm.selectedName = vm.vegetableCategory.slice(0);
+      vm.selected = vm.vegetable.slice(0);
     }
   };
-  vm.exists = function (item, list) {
-   return list.indexOf(item) > -1;
- };
-
- vm.isIndeterminate = function() {
-  return (vm.selected.length !== 0 &&
-    vm.selected.length !== vm.vegetableCategory.length);
-};
-vm.isChecked = function() {
-  return vm.selected.length === vm.vegetableCategory.length;
-};
-vm.toggleAll = function() {
-  if (vm.selected.length === vm.vegetableCategory.length) {
-    vm.selected = [];
-  } else if (vm.selected.length === 0 || vm.selected.length > 0) {
-    vm.selected = vm.vegetableCategory.slice(0);
-  }
-};
     // Remove existing Garden
     function remove() {
       if (confirm('Bạn có thực sự muốn xóa vườn không?')) {

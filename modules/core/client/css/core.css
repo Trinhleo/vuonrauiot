@@ -100,3 +100,7 @@ a:hover .header-profile-image {
     padding-bottom: 0px;
   }
 }
+ .img_container{
+    max-height: 200px;
+    max-width:200px;
+  }

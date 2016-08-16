@@ -1,9 +1,3 @@
-<style>
-  .img_container{
-    max-height: 200px;
-    max-width:200px;
-  }
-</style>
 <section>
   <div class="page-header">
     <ol class="breadcrumb">
@@ -28,6 +22,12 @@ ng-change="vm.figureOutItemsToDisplay()"/>
   <a data-ng-repeat="garden in vm.pagedItems"
   data-ui-sref="gardens.view({ gardenId: garden._id }) "
   class="list-group-item">
+  <div class="alert alert-danger" ng-show="!garden.approved">
+    <strong>Chưa được duyệt!</strong>
+  </div>
+  <div class="alert alert-success" ng-show="garden.approved">
+    <strong>Đã được duyệt</strong>
+  </div>
   <small class="list-group-item-text">
     Đã tạo lúc
     <span data-ng-bind="garden.created | date:'short'"></span>
@@ -46,7 +46,7 @@ ng-change="vm.figureOutItemsToDisplay()"/>
 ng-model="vm.currentPage" ng-change="vm.pageChanged()">
 </pagination>
 </md-tab>
-<md-tab label="Tổng hợp mùa vụ">
+<!-- <md-tab label="Tổng hợp mùa vụ">
 <md-input-container>
 <input class="form-control col-md-4" type="text" ng-model="vm.search2" placeholder="Tìm kiếm"
 ng-change="vm.figureOutItemsToDisplay2()"/>
@@ -67,7 +67,7 @@ ng-change="vm.figureOutItemsToDisplay2()"/>
 </div>
 <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage2" total-items="vm.filterLength2"
 ng-model="vm.currentPage2" ng-change="vm.pageChanged2()"></pagination>
-</md-tab>
+</md-tab> -->
 </md-tabs>
 
 

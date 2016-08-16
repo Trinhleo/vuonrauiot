@@ -1,0 +1,30 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.vegetablecat._id ? 'Cập nhật đối tượng sản xuất' : 'Tạo mới đối tượng sản xuất'}}</h1>
+  </div>
+  <div style="margin: 20px">
+      <a data-toggle="tooltip" title="Tạo vườn mới" class="btn btn-primary"
+      data-ui-sref="vegetablecats.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+    </a>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.vegetablecatForm" class="form-horizontal" ng-submit="vm.save(vm.form.vegetablecatForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Tên đối tượng</label>
+          <input name="name" type="text" ng-model="vm.vegetablecat.name" id="name" class="form-control" placeholder="Tên đối tượng" required>
+          <div ng-messages="vm.form.vegetablecatForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Tên đối tượng là bắt buộc.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.vegetablecat._id ? 'Cập nhật' : 'Tạo mới'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

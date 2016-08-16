@@ -5,7 +5,6 @@
  */
  var mongoose = require('mongoose'),
  Schema = mongoose.Schema;
-
  var SeasonSchema = new Schema({
   name: {
     type: String,
@@ -23,7 +22,11 @@
   },
   garden: {
     type: Schema.ObjectId,
-    ref: 'seasongardens'
+    ref: 'Garden'
+  },
+  imgUrl: {
+    type: String,
+    default: 'modules/gardens/client/img/gardens/no-images.png'
   },
   status: {
     type: Number,
@@ -57,46 +60,4 @@
   }
 }
 });
- var GardenSchema = new Schema({
-  name: {
-    type: String,
-    default: '',
-    required: 'Hãy nhập tên vườn',
-    trim: true,
-    unique: 'Tên vườn Đã tồn tại'
-  },
-  address: {
-    type: String,
-    default: '',
-    required: 'Hãy nhập địa chỉ vườn',
-    trim: true
-  },
-  created: {
-    type: Date,
-    default: Date.now
-  },
-   imgUrl: {
-    type: String,
-    default: 'modules/gardens/client/img/gardens/no-image.png'
-  },
-  vegetableList: {
-    type: Array,
-    items: {
-      type: Object,
-      properties: {
-        "name": {
-          type: String
-        },
-        "quantity": {
-          type: Number,
-          default: 0,
-          min: 0
-        }
-      }
-    }
-  }
-});
- mongoose.model('seasongardens',
-  GardenSchema,
-  'gardens');
  mongoose.model('Season', SeasonSchema);

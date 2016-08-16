@@ -3,7 +3,7 @@
 var path = require('path'),
 mongoose = require('mongoose'),
 Season = mongoose.model('Season'),
-Seasongardens = mongoose.model('seasongardens'),
+Seasongardens = require('mongoose').model('Garden'),
 errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
 _ = require('lodash');
 

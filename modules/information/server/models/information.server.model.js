@@ -10,10 +10,21 @@
  * Information Schema
  */
  var InformationSchema = new Schema({
-  
-});
+  // name: {
+  //   type: String,
+
+  // },
+  // garden: {
+  //   type: Schema.ObjectId,
+  //   ref: 'Dbseasongardens'
+  // },
+  // season: {
+  //   type: Schema.OblectId,
+  //   ref: 'Dbseason'
+  // }
+ });
  var DbSeasonSchema = new Schema({
-  name: {
+   name: {
     type: String,
     default: '',
     required: 'Hãy nhập tên mùa vụ',
@@ -31,26 +42,41 @@
     type: Schema.ObjectId,
     ref: 'seasongardens'
   },
+  imgUrl: {
+    type: String,
+    default: 'modules/gardens/client/img/gardens/no-images.png'
+  },
   status: {
     type: Number,
     default: 0
   },
-  products: {
-    type: Array,
-    items: {
-      type: Object,
-      properties: {
-        "name": {
-          type: String
-        },
-        "quantity": {
-          type: Number,
-          default: 0,
-          min: 0
-        }
-      }
-    }
+  vegetableName: {
+    type: String,
+    trim: true
+  },
+  startDate : {
+    type: Date
+  },
+  endDate : {
+    type: Date
+  },
+  seedQuantity: {
+    type: Number,
+    default: 0,
+    max : 10000
+  },
+  fertilizer1Date : {
+    type: Date
+  },
+  fertilizer2Date : {
+    type: Date
+  },
+  wateringHistory: {
+   type: Array,
+   items: {
+    type: Date
   }
+}
 });
  var DbGardenSchema = new Schema({
   name: {
@@ -74,9 +100,9 @@
     type: Schema.ObjectId,
     ref: 'User'
   },
-   imgUrl: {
+  imgUrl: {
     type: String,
-    default: 'modules/gardens/client/img/gardens/no-image.png'
+    default: 'modules/gardens/client/img/gardens/no-images.png'
   },
   vegetableList: {
     type: Array,

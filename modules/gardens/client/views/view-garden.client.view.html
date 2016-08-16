@@ -10,15 +10,20 @@
      <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
      <li class = "active">Chi tiết vườn rau</li>
    </ol>
-   <h1 data-ng-bind="vm.garden.name"></h1>
-   <i>Địa Chỉ: </i>
-   <small data-ng-bind="vm.garden.address"></small> <br>
-   <i>Diện tích:</i>
-   {{vm.garden.area}}<small> m<sup>2</small>
-   <img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
-   <span style="color: red" ng-show="season.status===2">Đã kết thúc</span>
-   <br>
-   <small>
+   <div class="alert alert-danger" ng-show="!vm.garden.approved">
+    <strong>Chưa được duyệt!</strong> 
+  </div>
+  <div class="alert alert-success" ng-show="vm.garden.approved">
+    <strong>Đã được duyệt</strong>
+  </div>
+  <h1 data-ng-bind="vm.garden.name"></h1>
+  <i>Địa Chỉ: </i>
+  <small data-ng-bind="vm.garden.address"></small> <br>
+  <i>Diện tích:</i>
+  {{vm.garden.area}}<small> m<sup>2</small>
+  <img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
+  <br>
+  <small>
     <em class="text-muted">
       Đã tạo lúc
       <span data-ng-bind="vm.garden.created | date:'short'"></span> <br>
@@ -33,7 +38,7 @@
 <md-tab label="Chi tiết vườn rau">
 <div>
   <div class="pull-right" data-ng-show="vm.garden.isAllow">
-    <a class="btn btn-primary" data-ui-sref="gardens.edit({ gardenId: vm.garden._id })">
+    <a class="btn btn-primary" data-ui-sref="gardens.edit({gardenId:vm.garden._id})">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a class="btn btn-primary" data-ng-click="vm.remove()">
@@ -46,13 +51,13 @@
       <thead md-head md-order="" md-on-reorder="">
         <tr md-row>
           <th md-column md-order-by="" style="color:#5d9842;"><span>Tên sản phẩm</span></th>
-          <!--<th md-column md-numeric md-order-by="" style="color:#5d9842;"><span>Số lượng</span></th>-->
+          <th md-column md-numeric md-order-by="" style="color:#5d9842;"></th>
         </tr>
       </thead>
       <tbody md-body>
         <tr md-row ng-repeat="item in vm.garden.vegetableList" ng-show="vm.garden.vegetableList">
-          <td md-cell style="color:#5d9842;">{{item}}</td>
-          <!--<td md-cell style="color:#5d9842;">{{item.quantity}}</td>-->
+          <td md-cell style="color:#5d9842;">{{item.name}}</td>
+          <td md-cell style="color:#5d9842;"><div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" /></div></td>
         </tr>
       </tbody>
     </table>

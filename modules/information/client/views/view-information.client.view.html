@@ -1,6 +1,6 @@
   <section>
   <div class="page-header">
-    <h1 data-ng-bind="vm.information.name"></h1>
+    <h1 data-ng-bind="vm.information.vegetableName"></h1>
   </div>
   <small>
     <em class="text-muted">
@@ -8,5 +8,6 @@
       <span data-ng-bind="vm.information.created | date:'short'"></span>
       </em>
   </small>
-  <p class="lead" data-ng-bind="vm.information.content"></p>
+   <h3><span style="color:#337ab7">Ngày gieo trồng: </span>{{vm.information.startDate| date:'short'}} &nbsp&nbsp<span style="color:#337ab7">Ngày thu hoạch:</span> {{vm.information.endDate| date:'short'}}<span ng-show="information.status!=2">(Dự kiến)</span></h3> 
+   <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{vm.information.imgUrl}}" /></div>
 </section>

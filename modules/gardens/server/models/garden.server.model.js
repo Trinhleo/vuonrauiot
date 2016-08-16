@@ -5,7 +5,6 @@
  */
  var mongoose = require('mongoose'),
  Schema = mongoose.Schema;
-
 /**
  * Garden Schema
  */
@@ -30,6 +29,10 @@
     max:1000000,
     required: 'Hãy nhập diên tích vườn',
   },
+  approved:{
+    type: Boolean,
+    default: false
+  },
   imgUrl: {
     type: String,
     default: 'modules/gardens/client/img/gardens/no-images.png'
@@ -45,61 +48,8 @@
   vegetableList: {
     type: Array,
     items: {
-      type: Object,
-      properties: {
-        "name": {
-          type: String
-        }
-      }
+      type: Object
     }
   }
 });
- var GardenSeasonsSchema = new Schema({
-  name: {
-    type: String,
-    default: '',
-    required: 'Hãy nhập tên mùa vụ',
-    trim: true
-  },
-  created: {
-    type: Date,
-    default: Date.now
-  },
-  garden: {
-    type: Schema.ObjectId,
-    ref: 'seasongardens'
-  },
-  status: {
-    type: Number,
-    default: 0
-  },
-  vegetableName: {
-    type: String,
-    trim: true
-  },
-  startDate : {
-    type: Date
-  },
-  endDate : {
-    type: Date
-  },
-  seedQuantity: {
-    type: Number,
-    default: 0,
-    max : 10000
-  },
-  fertilizer1Date : {
-    type: Date
-  },
-  fertilizer2Date : {
-    type: Date
-  },
-  wateringHistory: {
-   type: Array,
-   items: {
-    type: Date
-  }
-}
-});
  mongoose.model('Garden', GardenSchema);
- mongoose.model('GardenSeason', GardenSeasonsSchema,'seasons');
