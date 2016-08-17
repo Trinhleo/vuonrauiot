@@ -39,7 +39,7 @@
       }
     })
     .state('gardens.edit', {
-      url: '    /:gardenId/edit',
+      url: '/:gardenId/edit',
       templateUrl: 'modules/gardens/client/views/form-garden.client.view.html',
       controller: 'GardensController',
       controllerAs: 'vm',

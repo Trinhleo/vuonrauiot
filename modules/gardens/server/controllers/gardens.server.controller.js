@@ -85,7 +85,7 @@
   var currentUserRoles = req.user.roles[0];
   var seasons = [];
   if(currentUserRoles==='admin'){
-    GardenSeason.find().sort('-created').populate('garden', 'name').exec(function(err, gardenSeasons) {
+    GardenSeason.find().sort('-approved').populate('garden', 'name').exec(function(err, gardenSeasons) {
       if (err) {
        ;
      } else {
@@ -128,25 +128,50 @@
         var gd = gardens;
         var gardenIdList = [];
         for(var i in gd){
-            gardenIdList.push(gd[i]._id);
-            console.log(gardenIdList);
+          gardenIdList.push(gd[i]._id);
+          console.log(gardenIdList);
         }
         for (var i in ss) {
-           console.log(i);
-       
-          if(gardenIdList.indexOf(ss[i].garden._id)===true){
-            console.log(ss[i].garden._id);
-            seasons.push(ss[i]);
-          }
-        };
-        list.seasons = seasons;
-        list.gardens = gardens; 
-        data.push(list);
-        res.jsonp(data);
+         console.log(i);
+
+         if(gardenIdList.indexOf(ss[i].garden._id)===true){
+          console.log(ss[i].garden._id);
+          seasons.push(ss[i]);
+        }
       };
-    });
+      list.seasons = seasons;
+      list.gardens = gardens; 
+      data.push(list);
+      res.jsonp(data);
+    };
+  });
   }
 };
+
+/** approved handler
+*/
+exports.approveGarden = function(req, res) {
+  var garden = req.garden;
+  var currentUserid = req.user._id;
+  var currentUserRoles = req.user.roles[0];
+  if (currentUserRoles==='admin') {
+    var approved = garden.approved;
+    if(approved) {
+      garden.approved = 0;
+    } else {
+      garden.approved = 1;
+    }
+    garden.save();
+    res.jsonp(garden);
+    console.log(garden);
+    res.status(200);
+  } else {
+    return res.status(401).send({
+      message: "Bạn không có quyền thực hiện hành động này!"
+    });
+  }
+}
+
 
 /**
  * Garden middleware

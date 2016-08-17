@@ -6,8 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Information = mongoose.model('Information'),
-  DbSeason = mongoose.model('Dbseason'),
-  Dbeasongardens = mongoose.model('Dbseasongardens'),
+  DbSeason = require('mongoose').model('Season'),
+  Dbeasongardens = require('mongoose').model('Garden'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 

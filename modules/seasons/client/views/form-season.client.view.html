@@ -26,14 +26,16 @@
     required
     md-input-name="vegetable"
     md-no-cache="vm.noCache"
-    md-selected-item="vm.season.vegetableName"
+    md-selected-item="item"
     md-search-text="vm.searchText"
     md-items="item in vm.querySearch(vm.searchText)"
     md-item-text="item"
     md-min-length="0"
     md-menu-class="autocomplete-custom-template">
     <md-item-template>
-    <span class="item-title">{{item}}
+    <span class="item-title">{{item.name}}
+    </span>
+    <span class="item-img"><img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" />
     </span>
   </md-item-template>
   <md-not-found>

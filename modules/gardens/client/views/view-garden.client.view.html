@@ -11,28 +11,35 @@
      <li class = "active">Chi tiết vườn rau</li>
    </ol>
    <div class="alert alert-danger" ng-show="!vm.garden.approved">
-    <strong>Chưa được duyệt!</strong> 
-  </div>
-  <div class="alert alert-success" ng-show="vm.garden.approved">
-    <strong>Đã được duyệt</strong>
-  </div>
-  <h1 data-ng-bind="vm.garden.name"></h1>
-  <i>Địa Chỉ: </i>
-  <small data-ng-bind="vm.garden.address"></small> <br>
-  <i>Diện tích:</i>
-  {{vm.garden.area}}<small> m<sup>2</small>
-  <img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
-  <br>
-  <small>
-    <em class="text-muted">
-      Đã tạo lúc
-      <span data-ng-bind="vm.garden.created | date:'short'"></span> <br>
-      Chủ vườn:
-      <span data-ng-if="vm.garden.user"
-      data-ng-bind="vm.garden.user.displayName"></span>
-      <span data-ng-if="!vm.garden.user">Người dùng đã bị xóa</span>
-    </em>
-  </small>
+   <strong>Chưa được duyệt! </strong>
+    <button data-toggle="tooltip" title="Duyệt" class="btn btn-primary"
+    data-ng-click="vm.approve();" ng-if="vm.garden.isAllow">
+    <i class="glyphicon glyphicon-ok"></i>
+  </button>
+</div>
+<div class="alert alert-success" ng-show="vm.garden.approved">
+  <strong>Đã được duyệt! </strong><button data-toggle="tooltip" title="Bỏ duyệt" class="btn btn-primary"
+  ng-click="vm.approve()" ng-if="vm.garden.isAllow">
+  <i class="glyphicon glyphicon-remove"></i>
+</button>
+</div>
+<h1 data-ng-bind="vm.garden.name"></h1>
+<i>Địa Chỉ: </i>
+<small data-ng-bind="vm.garden.address"></small> <br>
+<i>Diện tích:</i>
+{{vm.garden.area}}<small> m<sup>2</small>
+<img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
+<br>
+<small>
+  <em class="text-muted">
+    Đã tạo lúc
+    <span data-ng-bind="vm.garden.created | date:'short'"></span> <br>
+    Chủ vườn:
+    <span data-ng-if="vm.garden.user"
+    data-ng-bind="vm.garden.user.displayName"></span>
+    <span data-ng-if="!vm.garden.user">Người dùng đã bị xóa</span>
+  </em>
+</small>
 </div>
 <md-tabs md-dynamic-height md-border-bottom>
 <md-tab label="Chi tiết vườn rau">
@@ -55,12 +62,14 @@
         </tr>
       </thead>
       <tbody md-body>
-        <tr md-row ng-repeat="item in vm.garden.vegetableList" ng-show="vm.garden.vegetableList">
+        <tr md-row ng-repeat="item in vm.pagedItems2" ng-show="vm.garden.vegetableList">
           <td md-cell style="color:#5d9842;">{{item.name}}</td>
           <td md-cell style="color:#5d9842;"><div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" /></div></td>
         </tr>
       </tbody>
     </table>
+    <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage2" total-items="vm.filterLength2"
+    ng-model="vm.currentPage2" ng-change="vm.pageChanged2()"></pagination>
   </md-table-container>
 </div>
 </md-tab>

@@ -37,10 +37,6 @@
 		vm.pageChanged = function () {
 			vm.figureOutItemsToDisplay();
 		};
-		// AllseasonsService.query(function (data) {
-		// 	vm.seasons = data;
-		// 	vm.buildPager2();
-		// });
 		vm.buildPager2 = function () {
 			vm.pagedItems2 = [];
 			vm.itemsPerPage2 = 5;

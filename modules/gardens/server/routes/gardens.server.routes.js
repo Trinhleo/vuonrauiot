@@ -15,8 +15,8 @@
   .get(gardens.read)
   .put(gardens.update)
   .delete(gardens.delete);
-  app.route('/api/gardens/:gardenId').all(gardensPolicy.isAllowed)
-
+  app.route('/api/gardens/:gardenId/approve').all(gardensPolicy.isAllowed)
+  .get(gardens.approveGarden);
   // Finish by binding the Garden middleware
   app.param('gardenId', gardens.gardenByID);
 };
