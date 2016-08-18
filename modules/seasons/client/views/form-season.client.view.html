@@ -20,16 +20,15 @@
       <p class="help-block error-text" ng-message="required">Tên mùa vụ là bắt buộc.</p>
     </div>
   </div>
-  <div class="form-group"> 
+  <div class="form-group" ng-if="!vm.season._id"> 
     <label>Chọn sản phẩm</label> 
-    <md-autocomplete
-    required
+    <md-autocomplete required
     md-input-name="vegetable"
     md-no-cache="vm.noCache"
-    md-selected-item="item"
+    md-selected-item="vm.season.vegetableName"
     md-search-text="vm.searchText"
     md-items="item in vm.querySearch(vm.searchText)"
-    md-item-text="item"
+    md-item-text="item.name"
     md-min-length="0"
     md-menu-class="autocomplete-custom-template">
     <md-item-template>

@@ -13,13 +13,13 @@
    <div class="alert alert-danger" ng-show="!vm.garden.approved">
    <strong>Chưa được duyệt! </strong>
     <button data-toggle="tooltip" title="Duyệt" class="btn btn-primary"
-    data-ng-click="vm.approve();" ng-if="vm.garden.isAllow">
+    data-ng-click="vm.approve();" ng-if="vm.garden.isAdmin">
     <i class="glyphicon glyphicon-ok"></i>
   </button>
 </div>
 <div class="alert alert-success" ng-show="vm.garden.approved">
   <strong>Đã được duyệt! </strong><button data-toggle="tooltip" title="Bỏ duyệt" class="btn btn-primary"
-  ng-click="vm.approve()" ng-if="vm.garden.isAllow">
+  ng-click="vm.approve()" ng-if="vm.garden.isAdmin">
   <i class="glyphicon glyphicon-remove"></i>
 </button>
 </div>

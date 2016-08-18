@@ -16,19 +16,26 @@
         vm.form = {};
         vm.remove = remove;
         vm.save = save;
-        var vm = this;
-        vm.authentication = Authentication;
-        vm.gardenId = $state.params.gardenId;
-        if(!vm.season._id){
+        vm.gardenId = vm.season._id?vm.season._id:$state.params.gardenId;
+        vm.contentLoaded = false;
+        vm.querySearch = querySearch;
+        if($state.params.gardenId){
             SeasonGardensService.get({
-              gardenId: $state.params.gardenId
+              gardenId: vm.gardenId
           },function (data) {
             vm.garden = data;
             vm.season.garden = vm.garden;
-            // vm.repos = vm.loadAll();
-        }).$promise
+            vm.vegetableList = loadAll() ;
+            vm.contentLoaded = true ;
+        }).$promise 
         } 
-
+        function loadAll() {
+            var vegets = vm.garden.vegetableList?vm.garden.vegetableList:[];
+            return vegets.map( function (veget) {
+                veget.value = veget.name.toLowerCase();
+                return veget;
+            });
+        }
         vm.buildPager = function () {
             vm.pagedItems = [];
             vm.itemsPerPage = 5;
@@ -53,16 +60,9 @@
         if(vm.season._id){
             vm.buildPager();
         }
-        // vm.loadAll = function () {
-        //     var repos = (vm.garden.vegetableList) ? vm.garden.vegetableList : [];
-        //     return repos.map(function (repo) {
-        //         repo.value = repo.name.toLowerCase();
-        //         return repo;
-        //     });
-        // }
         vm.simulateQuery = false;
-        vm.querySearch = function (query) {
-            var results = query ? vm.garden.vegetableList.filter(vm.createFilterFor(query)) : vm.garden.vegetableList,
+        function querySearch (query) {
+            var results = query? vm.vegetableList.filter(createFilterFor(query)):vm.vegetableList,
             deferred;
             if (vm.simulateQuery) {
                 deferred = $q.defer();
@@ -75,21 +75,7 @@
             }
         }
 
-        /**
-         * Create filter function for a query string
-         */
-         vm.createFilterFor = function (query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(item) {
-                return (item.value.indexOf(lowercaseQuery) === 0);
-            };
-        }
-
-
-        /**
-         * Create filter function for a query string
-         */
-         vm.createFilterFor = function (query) {
+        function createFilterFor(query) {
             var lowercaseQuery = angular.lowercase(query);
             return function filterFn(item) {
                 return (item.value.indexOf(lowercaseQuery) === 0);

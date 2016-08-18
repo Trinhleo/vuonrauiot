@@ -10,12 +10,12 @@ module.exports = function(app) {
   // Information Routes
   app.route('/api/information').all(informationPolicy.isAllowed)
     .get(information.list)
-    .post(information.create);
+    // .post(information.create);
 
   app.route('/api/information/:informationId').all(informationPolicy.isAllowed)
     .get(information.read)
-    .put(information.update)
-    .delete(information.delete);
+    // .put(information.update)
+    // .delete(information.delete);
 
   // Finish by binding the Information middleware
   app.param('informationId', information.informationByID);

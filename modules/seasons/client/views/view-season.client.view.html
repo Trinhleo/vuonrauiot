@@ -10,16 +10,17 @@
     <h2 data-ng-bind="vm.season.name"></h2>
   </div>
    <div class="pull-right"
-       data-ng-show="vm.season.isCurrentUserOwner">
-   <!--  <a class="btn btn-primary"
+       data-ng-show="vm.season.isAdmin">
+    <a class="btn btn-primary"
        data-ui-sref="seasons.edit({ seasonId: vm.season._id })">
       <i class="glyphicon glyphicon-edit"></i>
-    </a> -->
+    </a>
     <a class="btn btn-primary" data-ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <h2><span style="color:#337ab7">Sản phẩm:</span>{{vm.season.vegetableName}}</h2>
+  <h2><span style="color:#337ab7">Sản phẩm:</span>{{vm.season.vegetableName[0].name}}</h2>
+  <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{vm.season.vegetableName[0].imgUrl}}" /></div>
     <h3><span style="color:#337ab7">Ngày bắt đầu: </span>{{vm.season.startDate| date:'short'}} &nbsp&nbsp<span style="color:#337ab7">Ngày kết thúc:</span> {{vm.season.endDate| date:'short'}}</h3>
      <span style="color: red" ng-show="season.status===2">Đã kết thúc</span>
   <!-- <small>

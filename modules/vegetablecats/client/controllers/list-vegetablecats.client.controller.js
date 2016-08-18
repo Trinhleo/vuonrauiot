@@ -5,9 +5,9 @@
     .module('vegetablecats')
     .controller('VegetablecatsListController', VegetablecatsListController);
 
-  VegetablecatsListController.$inject = ['VegetablecatsService'];
+  VegetablecatsListController.$inject = ['VegetablecatsService','$filter'];
 
-  function VegetablecatsListController(VegetablecatsService) {
+  function VegetablecatsListController(VegetablecatsService,$filter) {
     var vm = this;
 
     VegetablecatsService.query(function (data) {

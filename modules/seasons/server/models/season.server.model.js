@@ -10,7 +10,8 @@
     type: String,
     default: '',
     required: 'Hãy nhập tên mùa vụ',
-    trim: true
+    trim: true,
+    unique: 'Tên mùa vụ bị trùng'
   },
   created: {
     type: Date,
@@ -33,8 +34,7 @@
     default: 0
   },
   vegetableName: {
-    type: String,
-    trim: true
+    type: Array
   },
   startDate : {
     type: Date
@@ -56,6 +56,9 @@
   wateringHistory: {
    type: Array,
    items: {
+    type: Date
+  },
+  deleteDate : {
     type: Date
   }
 }

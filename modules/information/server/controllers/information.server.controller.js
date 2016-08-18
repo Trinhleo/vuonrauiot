@@ -3,36 +3,36 @@
 /**
  * Module dependencies.
  */
-var path = require('path'),
-  mongoose = require('mongoose'),
-  Information = mongoose.model('Information'),
-  DbSeason = require('mongoose').model('Season'),
-  Dbeasongardens = require('mongoose').model('Garden'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-  _ = require('lodash');
+ var path = require('path'),
+ mongoose = require('mongoose'),
+ Information = mongoose.model('Information'),
+ DbSeason = require('mongoose').model('Season'),
+ Dbeasongardens = require('mongoose').model('Garden'),
+ errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+ _ = require('lodash');
 
 /**
  * Create a Information
  */
-exports.create = function(req, res) {
-  var information = new Information(req.body);
-  information.user = req.user;
+// exports.create = function(req, res) {
+//   var information = new Information(req.body);
+//   information.user = req.user;
 
-  information.save(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(information);
-    }
-  });
-};
+//   information.save(function(err) {
+//     if (err) {
+//       return res.status(400).send({
+//         message: errorHandler.getErrorMessage(err)
+//       });
+//     } else {
+//       res.jsonp(information);
+//     }
+//   });
+// };
 
 /**
  * Show the current Information
  */
-exports.read = function(req, res) {
+ exports.read = function(req, res) {
   // convert mongoose document to JSON
   var information = req.information ? req.information.toJSON() : {};
   information.isCurrentUserOwner = req.user && information.user && information.user._id.toString() === req.user._id.toString() ? true : false;
@@ -42,58 +42,75 @@ exports.read = function(req, res) {
 /**
  * Update a Information
  */
-exports.update = function(req, res) {
-  var information = req.information ;
+// exports.update = function(req, res) {
+//   var information = req.information ;
 
-  information = _.extend(information , req.body);
+//   information = _.extend(information , req.body);
 
-  information.save(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(information);
-    }
-  });
-};
+//   information.save(function(err) {
+//     if (err) {
+//       return res.status(400).send({
+//         message: errorHandler.getErrorMessage(err)
+//       });
+//     } else {
+//       res.jsonp(information);
+//     }
+//   });
+// };
 
 /**
  * Delete an Information
  */
-exports.delete = function(req, res) {
-  var information = req.information ;
+// exports.delete = function(req, res) {
+//   var information = req.information ;
 
-  information.remove(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(information);
-    }
-  });
-};
+//   information.remove(function(err) {
+//     if (err) {
+//       return res.status(400).send({
+//         message: errorHandler.getErrorMessage(err)
+//       });
+//     } else {
+//       res.jsonp(information);
+//     }
+//   });
+// };
 
 /**
  * List of Information
  */
-exports.list = function(req, res) { 
-  Information.find().sort('-created').populate('Dbseason', 'name').exec(function(err, information) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(information);
-    }
-  });
+ exports.list = function(req, res) { 
+  Information.aggregate([
+  {
+    $group: {
+                _id: '$vegetableName',  //$region is the column name in collection
+                count: {$sum: 1}
+              }
+            }
+            ], function (err, result) {
+              if (err) {
+                next(err);
+              } else {
+                res.json(result);
+              }
+            });
 };
 
+
+exports.listByGroupId = function(req, res) { 
+ Information.find({}).sort('-created').populate('Dbseason', 'name').exec(function(err, information) {
+  if (err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  } else {
+    res.jsonp(information);
+  }
+});
+}
 /**
  * Information middleware
  */
-exports.informationByID = function(req, res, next, id) {
+ exports.informationByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({

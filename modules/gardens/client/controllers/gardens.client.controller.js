@@ -58,10 +58,10 @@
       vm.pageChanged2 = function () {
         vm.figureOutItemsToDisplay2();
       };
-      if(vm.garden){
+      if(vm.garden._id){
         vm.buildPager2();
       }
-      if(vm.garden.seasons){
+      if(vm.garden._id){
         vm.buildPager();
       }
       function createSeason() {

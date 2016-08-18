@@ -152,24 +152,16 @@
 */
 exports.approveGarden = function(req, res) {
   var garden = req.garden;
-  var currentUserid = req.user._id;
-  var currentUserRoles = req.user.roles[0];
-  if (currentUserRoles==='admin') {
-    var approved = garden.approved;
-    if(approved) {
-      garden.approved = 0;
-    } else {
-      garden.approved = 1;
-    }
-    garden.save();
-    res.jsonp(garden);
-    console.log(garden);
-    res.status(200);
+  var approved = garden.approved;
+  if(approved) {
+    garden.approved = 0;
   } else {
-    return res.status(401).send({
-      message: "Bạn không có quyền thực hiện hành động này!"
-    });
+    garden.approved = 1;
   }
+  garden.save();
+  res.jsonp(garden);
+  console.log(garden);
+  res.status(200); 
 }
 
 
