@@ -17,10 +17,6 @@
     type: Date,
     default: Date.now
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   garden: {
     type: Schema.ObjectId,
     ref: 'Garden'
@@ -33,8 +29,9 @@
     type: Number,
     default: 0
   },
-  vegetableName: {
-    type: Array
+  vegetable: {
+    type: Schema.ObjectId,
+    ref : 'Vegetablecat'
   },
   startDate : {
     type: Date
@@ -57,10 +54,24 @@
    type: Array,
    items: {
     type: Date
+  }},
+  quantity: {
+    type: Number,
+    default: 0
+  },
+  isDeleted : {
+    type: Boolean,
+    default: false
   },
   deleteDate : {
     type: Date
+  },
+  isEdited: {
+    type: Boolean,
+    default : false
+  },
+  editDate: {
+    type : Date
   }
-}
 });
  mongoose.model('Season', SeasonSchema);

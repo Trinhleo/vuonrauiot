@@ -21,9 +21,9 @@ var _ = require('lodash'),
   webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 
 // Set NODE_ENV to 'test'
-gulp.task('env:test', function () {
-  process.env.NODE_ENV = 'test';
-});
+// gulp.task('env:test', function () {
+//   process.env.NODE_ENV = 'test';
+// });
 
 // Set NODE_ENV to 'development'
 gulp.task('env:dev', function () {

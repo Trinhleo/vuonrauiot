@@ -12,18 +12,10 @@
  <form name="vm.form.seasonForm" class="form-horizontal" ng-submit="vm.save(vm.form.seasonForm.$valid)"
  novalidate>
  <fieldset class="col-md-offset-3 col-md-6 col-md-offset-3">
-   <div class="form-group" show-errors>
-    <label class="control-label" for="name">Tên mùa vụ</label>
-    <input name="name" type="text" ng-model="vm.season.name" id="name" class="form-control"
-    placeholder="Tên mùa vụ" required>
-    <div ng-messages="vm.form.gardenForm.name.$error" role="alert">
-      <p class="help-block error-text" ng-message="required">Tên mùa vụ là bắt buộc.</p>
-    </div>
-  </div>
-  <div class="form-group" ng-if="!vm.season._id"> 
-    <label>Chọn sản phẩm</label> 
+  <div class="form-group" ng-if="!vm.season._id&&!vm.gardenId"> 
+    <label>Vườn rau:</label> 
     <md-autocomplete required
-    md-input-name="vegetable"
+    md-input-name="garden"
     md-no-cache="vm.noCache"
     md-selected-item="vm.season.vegetableName"
     md-search-text="vm.searchText"
@@ -31,16 +23,50 @@
     md-item-text="item.name"
     md-min-length="0"
     md-menu-class="autocomplete-custom-template">
-    <md-item-template>
+    <md-item-template style="margin-top: 10px">
     <span class="item-title">{{item.name}}
     </span>
     <span class="item-img"><img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" />
     </span>
   </md-item-template>
   <md-not-found>
-  Không tìm thấy sản phẩm "{{vm.searchText}}".
+  Không tìm thấy vườn "{{vm.searchText}}".
 </md-not-found>
 </md-autocomplete>
+<span ng-if="!vm.season.vegetableName"><em style="color:red">Hãy chọn vườn rau.</em></span>
+</div>
+<div class="form-group" > 
+  <label>Đối tượng sản xuất</label> 
+  <md-autocomplete required
+  md-input-name="vegetable"
+  md-no-cache="vm.noCache"
+  md-selected-item="vm.season.vegetable"
+  md-search-text="vm.searchText"
+  md-items="item in vm.querySearch(vm.searchText)"
+  md-item-text="item.name"
+  md-min-length="0"
+  md-menu-class="autocomplete-custom-template" ng-disabled="vm.season._id">
+  <md-item-template style="margin-top: 10px">
+  <span class="item-title" style="max-height: 70px">{{item.name}}
+   <!-- <img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" /> -->
+ </span>
+    <!-- /span>
+    <span class="item-img"><img alt="" class="img-responsive text-center" ng-src="{{item.imgUrl}}" />
+    </span> -->
+  </md-item-template>
+  <md-not-found>
+  Không tìm thấy đối tượng "{{vm.searchText}}".
+</md-not-found>
+</md-autocomplete>
+<span ng-if="!vm.season.vegetable&&!vm.season_id"><em style="color:red">Hãy chọn đối tượng sản xuất.</em></span>
+</div>
+<div class="form-group" show-errors>
+  <label class="control-label" for="name">Tên mùa vụ</label>
+  <input name="name" type="text" ng-model="vm.season.name" id="name" class="form-control"
+  placeholder="Tên mùa vụ" required>
+  <div ng-messages="vm.form.gardenForm.name.$error" role="alert">
+    <p class="help-block error-text" ng-message="required">Tên mùa vụ là bắt buộc.</p>
+  </div>
 </div>
 <div class="form-group" show-errors>
   <label class="control-label" for="name">Số lượng giống:</label>
@@ -53,17 +79,17 @@
   </div>
 </div>
 <div class="form-group">
-  <md-datepicker ng-disabled="vm.season._id" name="startdate" ng-model="vm.season.startDate" md-placeholder="Ngày bắt đầu" md-max-date="vm.season.endDate" md-open-on-focus required>
-</md-datepicker> <span ng-show="vm.season._id">{{vm.season.startDate| date:'short'}}</span>
+  <md-datepicker  name="startdate" ng-model="vm.season.startDate" md-placeholder="Ngày bắt đầu" md-max-date="vm.season.endDate" md-open-on-focus required>
+</md-datepicker> <!-- <span ng-show="vm.season._id">{{vm.season.startDate| date:'short'}}</span> -->
 </div>
 <div class="form-group">
-  <md-datepicker ng-show="!vm.season._id" name="enddate"  ng-disabled="vm.season._id" ng-model="vm.season.endDate" md-placeholder="Ngày kết thúc" md-min-date="vm.season.startDate" md-open-on-focus  required>
-</md-datepicker> <span ng-show="vm.season._id">{{vm.season.endDate| date:'short'}}</span>
+  <md-datepicker  name="enddate"  ng-model="vm.season.endDate" md-placeholder="Ngày kết thúc" md-min-date="vm.season.startDate" md-open-on-focus  required>
+</md-datepicker> <!-- <span ng-show="vm.season._id">{{vm.season.endDate| date:'short'}}</span> -->
 </div>
 
 <div class="form-group">
   <button type="submit" class="btn btn-default"
-  ng-disabled="vm.form.seasonForm.name.$invalid||vm.form.seasonForm.vegetable.$invalid||vm.form.seasonForm.startdate.$invalid||vm.form.seasonForm.enddate.$invalid || vm.form.seasonForm.seedQuantity.$invalid||vm.form.seasonForm.enddate.$invalid">
+  ng-disabled="vm.form.seasonForm.name.$invalid||vm.form.seasonForm.vegetable.$invalid||vm.form.seasonForm.startdate.$invalid||vm.form.seasonForm.enddate.$invalid || vm.form.seasonForm.seedQuantity.$invalid||vm.form.seasonForm.enddate.$invalid||!vm.season.vegetable">
   {{vm.season._id ? 'Cập nhật' : 'Tạo mới'}}
 </button>
 </div>

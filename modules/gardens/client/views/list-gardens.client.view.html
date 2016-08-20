@@ -19,7 +19,7 @@ ng-change="vm.figureOutItemsToDisplay()"/>
 </md-input-container>
 <md-divider style="margin-bottom:30px;"></md-divider>
 <div class="list-group" >
-  <a data-ng-repeat="garden in vm.pagedItems"
+  <md-card data-ng-repeat="garden in vm.pagedItems"
   data-ui-sref="gardens.view({ gardenId: garden._id }) "
   class="list-group-item">
   <div class="alert alert-danger" ng-show="!garden.approved">
@@ -37,7 +37,7 @@ ng-change="vm.figureOutItemsToDisplay()"/>
   </small>
   <h4 class="list-group-item-heading" data-ng-bind="garden.name"></h4>
   <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{garden.imgUrl}}" /></div>
-</a>
+</md-card>
 </div>
 <div class="alert alert-warning text-center" data-ng-if="vm.gardens.$resolved && !vm.gardens.length">
   Chưa có vườn, hãy <a data-ui-sref="gardens.create">tạo một vườn</a>
@@ -46,28 +46,33 @@ ng-change="vm.figureOutItemsToDisplay()"/>
 ng-model="vm.currentPage" ng-change="vm.pageChanged()">
 </pagination>
 </md-tab>
-<!-- <md-tab label="Tổng hợp mùa vụ">
+<md-tab label="Tổng hợp mùa vụ">
 <md-input-container>
 <input class="form-control col-md-4" type="text" ng-model="vm.search2" placeholder="Tìm kiếm"
 ng-change="vm.figureOutItemsToDisplay2()"/>
 </md-input-container>
 <md-divider style="margin-bottom:30px;"></md-divider>
 <div class="list-group">
-  <a data-ng-repeat="season in vm.pagedItems2"
+  <md-card data-ng-repeat="season in vm.pagedItems2"
   ng-click="vm.gotoView(season._id)"
   class="list-group-item">
-  <span style="color: red" ng-show="season.status===2">Đã kết thúc</span>
+  <div>
+  <span class="alert alert-danger" ng-show="season.status===2">Đã kết thúc</span>
+  <span class="alert alert-success" ng-show="season.status===1">Đang diễn ra</span>
+  <span class="alert alert-warning" ng-show="season.status===0">Chưa bắt đầu</span>
+  </div>
+  <br>
   <small class="list-group-item-text">
     Đã tạo lúc
     <span data-ng-bind="season.created | date:'short'"></span>
   </small>
   <h4 data-ng-bind="season.garden.name"></h4>
   <h4 class="list-group-item-heading" data-ng-bind="season.name"></h4>
-</a>
+</md-card>
 </div>
 <pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage2" total-items="vm.filterLength2"
 ng-model="vm.currentPage2" ng-change="vm.pageChanged2()"></pagination>
-</md-tab> -->
+</md-tab>
 </md-tabs>
 
 

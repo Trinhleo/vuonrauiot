@@ -5,9 +5,9 @@
  */
  var path = require('path'),
  mongoose = require('mongoose'),
- Information = mongoose.model('Information'),
- DbSeason = require('mongoose').model('Season'),
- Dbeasongardens = require('mongoose').model('Garden'),
+ Information = require('mongoose').model('Season'),
+ Dbseasongardens = require('mongoose').model('Garden'),
+ Dbvegetable = require('mongoose').model('Vegetablecat'), 
  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
  _ = require('lodash');
 
@@ -34,9 +34,12 @@
  */
  exports.read = function(req, res) {
   // convert mongoose document to JSON
-  var information = req.information ? req.information.toJSON() : {};
-  information.isCurrentUserOwner = req.user && information.user && information.user._id.toString() === req.user._id.toString() ? true : false;
-  res.jsonp(information);
+  var information = req.list ? req.list : [];
+  var list ={};
+  list.info = information
+  console.log(list);
+  // information.isCurrentUserOwner = req.user && information.user && information.user._id.toString() === req.user._id.toString() ? true : false;
+  res.jsonp(list);
 };
 
 /**
@@ -79,34 +82,50 @@
  * List of Information
  */
  exports.list = function(req, res) { 
-  Information.aggregate([
-  {
+  Information.aggregate([ {
+    $match: {
+      isDeleted: false
+    }
+  },{
     $group: {
-                _id: '$vegetableName',  //$region is the column name in collection
-                count: {$sum: 1}
-              }
-            }
-            ], function (err, result) {
-              if (err) {
-                next(err);
-              } else {
-                res.json(result);
-              }
-            });
+      _id: '$vegetable',
+      count: {
+        $sum: 1
+      }
+    }
+  }]).exec(function(err, results) {
+    console.log(results);
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+    Information.populate(results, {path:'name'}, function(err, populatedResults) {
+      if(err) {
+       return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+     }
+     else {
+      res.jsonp(populatedResults);
+    }
+  });
+  });
 };
 
 
-exports.listByGroupId = function(req, res) { 
- Information.find({}).sort('-created').populate('Dbseason', 'name').exec(function(err, information) {
-  if (err) {
-    return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
-    });
-  } else {
-    res.jsonp(information);
-  }
-});
-}
+// exports.listByGroupId = function(req, res) { 
+
+//  Information.find({_id: id}).sort('-created').populate('Dbseason', 'name').exec(function(err, information) {
+//   if (err) {
+//     return res.status(400).send({
+//       message: errorHandler.getErrorMessage(err)
+//     });
+//   } else {
+//     res.jsonp(information);
+//   }
+// });
+// }
 /**
  * Information middleware
  */
@@ -117,8 +136,9 @@ exports.listByGroupId = function(req, res) {
       message: 'Thông tin không hợp lệ'
     });
   }
-
-  Information.findById(id).populate('user', 'displayName').exec(function (err, information) {
+  var vegetableId =  mongoose.Types.ObjectId(id);
+  console.log(vegetableId);
+  Information.find({vegetable:vegetableId}).populate('vegetable','name imgUrl').exec(function (err, information) {
     if (err) {
       return next(err);
     } else if (!information) {
@@ -126,7 +146,13 @@ exports.listByGroupId = function(req, res) {
         message: 'Không tìm thấy thông tin'
       });
     }
-    req.information = information;
-    next();
-  });
+    console.log(information)
+      // for(var x in information){
+      //   if (information[x].vegetableName.)
+      //   information[x]
+
+      // }
+      req.list = information;
+      next();
+    });
 };

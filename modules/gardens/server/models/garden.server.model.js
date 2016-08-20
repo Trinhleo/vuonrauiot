@@ -50,6 +50,20 @@
     items: {
       type: Object
     }
+  },
+  isDeleted : {
+    type: Boolean,
+    default: false
+  },
+  deleteDate : {
+    type : Date
+  },
+  isEdited: {
+    type: Boolean,
+    default : false
+  },
+  editDate: {
+    type : Date
   }
 });
  mongoose.model('Garden', GardenSchema);

@@ -23,20 +23,26 @@ cron.schedule('* * * * *', function(){
 
 });
 // check status realtime;
-setInterval(myTimer, 1000);
-function myTimer() {
-    Season.find().sort('-created').populate('garden', 'name').exec(function (err, seasons) {
+setInterval(realtime, 1000);
+function realtime() {
+    var sse = [];
+    Season.find({status:{$lt:2},isDeleted: false}).sort('-created').populate('garden', 'name').exec(function (err, seasons) {
         if (err) {
             ;
         } else {
             var ss = seasons;
             for(var i in ss){
-                var dateNow = new Date();
-                if(ss[i].endDate<=dateNow){
+              var dateNow = new Date();
+              if(ss[i].startDate<=dateNow&&ss[i].endDate>dateNow){
+                 ss[i].status = 1;
+                 ss[i].save();
+             } else if(ss[i].endDate<=dateNow){
                  var season = ss[i];
+                 var seadQ = season.seedQuantity
                  season.status = 2;
+                 season.quantity = _.random(seadQ/2, seadQ);
                  season.save();
-             }
+             } 
          }
      }
  });
@@ -45,6 +51,9 @@ function myTimer() {
 exports.create = function (req, res) {
     var season = new Season(req.body);
     var gardenId = season.garden;
+    console.log(gardenId);
+    var vegetable = season.vegetable;
+    console.log (vegetable)
     season.name = gardenId+"_"+season.name;
     var startDate = Date.parse(season.startDate);
     var endDate =  Date.parse(season.endDate);
@@ -74,17 +83,19 @@ exports.read = function (req, res) {
     var season = req.season ? req.season.toJSON() : {};
     season.isAdmin = req.user.roles[0]==='admin'? true:false;
     // season.isAllow = (garden.isCurrentUserOwner|| garden.isAdmin)?true:false;
-    
+    var seasonName = season.name.slice(25);
+    season.name = seasonName;
     // season.isCurrentUserOwner = req.user && season.user && season.user._id.toString() === req.user._id.toString() ? true : false;
-
     res.jsonp(season);
 };
 
 exports.update = function (req, res) {
     var season = req.season;
-
     season = _.extend(season, req.body);
-
+    season.isEdited = true;
+    season.editDate = new Date();
+    var gardenId = season.garden._id;   
+    season.name = gardenId+"_"+season.name;
     season.save(function (err) {
         if (err) {
             return res.status(400).send({
@@ -99,6 +110,7 @@ exports.update = function (req, res) {
 
 exports.delete = function (req, res) {
     var season = req.season;
+    season.isDeleted = true;
     season.deleteDate = new Date();
     console.log(season);
     season.save();
@@ -106,15 +118,20 @@ exports.delete = function (req, res) {
 
 
 exports.list = function (req, res) {
-    Season.find().sort('-created').populate('garden', 'name').exec(function (err, seasons) {
+    Season.find({isDeleted: false}).sort('-created').populate('garden', 'name').populate('vegetable', 'name imgUrl').exec(function (err, seasons) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(seasons);
-        }
-    });
+            for(var x in seasons){
+               var seasonName = seasons[x].name.slice(25);
+               seasons[x].name = seasonName;
+               delete  seasons[x].isDeleted;
+           }
+           res.jsonp(seasons);
+       }
+   });
 };
 
 exports.seasonByID = function (req, res, next, id) {
@@ -125,10 +142,10 @@ exports.seasonByID = function (req, res, next, id) {
         });
     }
 
-    Season.findById(id).populate('garden', 'name').exec(function (err, season) {
+    Season.findById(id).populate('garden', 'name').populate('vegetable','name imgUrl').exec(function (err, season) {
         if (err) {
             return next(err);
-        } else if (!season) {
+        } else if (!season||season.isDeleted) {
             return res.status(404).send({
                 message: 'Không tìm thấy mùa vụ'
             });

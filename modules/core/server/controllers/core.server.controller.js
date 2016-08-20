@@ -32,7 +32,7 @@ exports.renderNotFound = function (req, res) {
     },
     'application/json': function () {
       res.json({
-        error: 'Path not found'
+        error: 'Không tìm thấy đường dẫn'
       });
     },
     'default': function () {
