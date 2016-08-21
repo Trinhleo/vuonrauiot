@@ -17,6 +17,10 @@
     vm.remove = remove;
     vm.save = save;
     vm.createSeason = createSeason;
+    vm.isArray = isArray;
+    function isArray (data) {
+      return Object.prototype.toString.call(data) === '[object Array]'
+    };
     vm.gotoView = function(seasonId){
       $state.go('seasons.view', {
         seasonId: seasonId
@@ -71,51 +75,48 @@
       VegetableCatService.query(function (data) {
         vm.vegetable = data?data:[];
         vm.vegetableCategory= [];
-        for(var x=0;x <  vm.vegetable.length;x++){
-         vm.vegetableCategory.push(vm.vegetable[x].name);
+        for(var x = 0; x < vm.vegetable.length ; x++){
+         vm.vegetableCategory.push(vm.vegetable[x]._id);
        }
-       vm.contentLoad =vm.vegetableCategory?true:false;
+       vm.contentLoad = vm.vegetableCategory&&vm.vegetableCategory!=0&&vm.selected?true:false;
      });
       if (vm.garden._id){
         vm.garden.vegetableList = garden.vegetableList;
-        vm.selected = vm.garden.vegetableList;
-        vm.selectedName = [];
-        for(var x in vm.selected){
-         vm.selectedName.push(vm.selected[x].name);
+         vm.selected = [];
+        for(var x in vm.garden.vegetableList){
+          if (vm.garden.vegetableList[x]._id){
+           vm.selected.push(vm.garden.vegetableList[x]._id);
+         }
        }
+       vm.contentLoad = vm.selected? true : false;
      } else {
-      vm.selectedName = [];
       vm.selected = [];
     }
-    vm.toggle = function (item, selectedName,selected) {
-      var idx = selectedName.indexOf(item.name);
+    vm.toggle = function (item, selected) {
+      var idx = selected.indexOf(item._id);
       if (idx > -1) {
-        selectedName.splice(idx, 1);
         selected.splice(idx,1);
       }
       else {
-        selectedName.push(item.name);
-        selected.push(item)
+        selected.push(item._id)
       }
     };
-    vm.exists = function (item, list) {
-     return list.indexOf(item) > -1;
+    vm.exists = function (item, selected) {
+     return selected.indexOf(item._id) > -1;
    };
 
    vm.isIndeterminate = function() {
-    return (vm.selectedName.length !== 0 &&
-      vm.selectedName.length !== vm.vegetableCategory.length);
+    return (vm.selected.length !== 0 &&
+      vm.selected.length !== vm.vegetableCategory.length);
   };
   vm.isChecked = function() {
-    return vm.selectedName.length === vm.vegetableCategory.length;
+    return vm.selected.length === vm.vegetableCategory.length;
   }
   vm.toggleAll = function() {
-    if (vm.selectedName.length === vm.vegetableCategory.length) {
-      vm.selectedName = [];
+    if (vm.selected.length === vm.vegetableCategory.length) {
       vm.selected = [];
-    } else if (vm.selectedName.length === 0 || vm.selectedName.length > 0) {
-      vm.selectedName = vm.vegetableCategory.slice(0);
-      vm.selected = vm.vegetable.slice(0);
+    } else if (vm.selected.length === 0 || vm.selected.length > 0) {
+      vm.selected = vm.vegetableCategory.slice(0);
     }
   };
     // Remove existing Garden
@@ -131,8 +132,13 @@
         $scope.$broadcast('show-errors-check-validity', 'vm.form.gardenForm');
         return false;
       }
-      // console.log(vm.selected.length);
-      vm.garden.vegetableList = vm.selected;
+      var vegetableList = [];
+      for(var x in vm.selected){
+        var list = {}
+        list._id = vm.selected[x];
+        vegetableList.push(list);
+      }
+      vm.garden.vegetableList = vegetableList;
       // TODO: move create/update logic to service
       if (vm.garden._id) {
         vm.garden.$update(successCallback, errorCallback);

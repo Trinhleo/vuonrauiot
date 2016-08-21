@@ -118,7 +118,7 @@ exports.delete = function (req, res) {
 
 
 exports.list = function (req, res) {
-    Season.find({isDeleted: false}).sort('-created').populate('garden', 'name').populate('vegetable', 'name imgUrl').exec(function (err, seasons) {
+    Season.find({isDeleted: false}).sort('-created').populate('garden', 'name').populate('vegetable').exec(function (err, seasons) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -142,7 +142,7 @@ exports.seasonByID = function (req, res, next, id) {
         });
     }
 
-    Season.findById(id).populate('garden', 'name').populate('vegetable','name imgUrl').exec(function (err, season) {
+    Season.findById(id).populate('garden', 'name').populate('vegetable').exec(function (err, season) {
         if (err) {
             return next(err);
         } else if (!season||season.isDeleted) {

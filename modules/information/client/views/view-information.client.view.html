@@ -1,13 +1,39 @@
-  <section>
+ <style>
+  span {
+    color:#337ab7;
+  }
+</style>
+<section>
   <div class="page-header">
-    <h1 data-ng-bind="vm.information.vegetableName"></h1>
+    <h1 style="color:#337ab7">Thông tin chi tiết đối tượng sản xuất:<span style="color:green"> {{vm.information[0].vegetable.name}}</span></h1>
   </div>
-  <small>
-    <em class="text-muted">
-      Cập nhật vào
-      <span data-ng-bind="vm.information.created | date:'short'"></span>
-      </em>
-  </small>
-   <h3><span style="color:#337ab7">Ngày gieo trồng: </span>{{vm.information.startDate| date:'short'}} &nbsp&nbsp<span style="color:#337ab7">Ngày thu hoạch:</span> {{vm.information.endDate| date:'short'}}<span ng-show="information.status!=2">(Dự kiến)</span></h3> 
-   <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{vm.information.imgUrl}}" /></div>
+  <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{vm.information[0].vegetable.imgUrl}}" /></div>
+  <md-input-container>
+  <input class="form-control" type="text" ng-model="vm.search" placeholder="Tìm kiếm"
+  ng-change="vm.figureOutItemsToDisplay()"/>
+</md-input-container>
+<md-table-container>
+<table md-table style="color:#5d9842;">
+  <thead md-head md-order="" md-on-reorder="">
+    <tr md-row>
+      <th md-column md-order-by="" style="color:#5d9842;"><span>Tên vườn</span></th>
+      <th md-column md-order-by="" style="color:#5d9842;"><span>Tên mùa vụ</span></th>
+      <th md-column md-order-by="" style="color:#5d9842;"><span>Ngày bắt đầu</span></th>
+      <th md-column md-order-by="" style="color:#5d9842;"><span>Ngày kết thúc</span></th>
+      <th md-column md-numeric md-order-by="" style="color:#5d9842;"><span>Số lượng giống</span></th>
+    </tr>
+  </thead>
+  <tbody md-body>
+    <tr md-row ng-repeat="item in vm.pagedItems" ng-show="vm.information">
+      <td md-cell style="color:#5d9842;">{{item.garden.name}}</td>
+      <td md-cell style="color:#5d9842;">{{item.name}}</td>
+      <td md-cell style="color:#5d9842;">{{item.startDate|date:'short'}}</td>
+      <td md-cell style="color:#5d9842;">{{item.endDate|date:'short'}}</td>
+      <td md-cell style="color:#5d9842;">{{item.seedQuantity}}</td>
+    </tr>
+  </tbody>
+</table>
+<pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength"
+ng-model="vm.currentPage" ng-change="vm.pageChanged()"></pagination>
+</md-table-container>
 </section>

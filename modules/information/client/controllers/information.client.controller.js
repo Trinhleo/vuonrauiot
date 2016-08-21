@@ -1,53 +1,42 @@
 (function () {
-        'use strict';
+    'use strict';
 
         // Information controller
         angular
-            .module('information')
-            .controller('InformationController', InformationController);
+        .module('information')
+        .controller('InformationController', InformationController);
 
-        InformationController.$inject = ['$scope', '$state', 'Authentication', 'informationResolve'];
+        InformationController.$inject = ['$scope','$filter', '$state', 'Authentication', 'informationResolve'];
 
-        function InformationController($scope, $state, Authentication, information) {
+        function InformationController($scope,$filter, $state, Authentication, information) {
             var vm = this;
 
             vm.authentication = Authentication;
-            vm.information = information;
+            vm.information = information.info;
             vm.error = null;
             vm.form = {};
-//            vm.remove = remove;
- //            vm.save = save;
-
-            // Remove existing Information
-            //        function remove() {
-            //            if (confirm('Are you sure you want to delete?')) {
-            //                vm.information.$remove($state.go('information.list'));
-            //            }
-            //        }
-
-            //        // Save Information
-            //        function save(isValid) {
-            //            if (!isValid) {
-            //                $scope.$broadcast('show-errors-check-validity', 'vm.form.informationForm');
-            //                return false;
-            //            }
-
-            // // TODO: move create/update logic to service
-            // if (vm.information._id) {
-            //   vm.information.$update(successCallback, errorCallback);
-            // } else {
-            //   vm.information.$save(successCallback, errorCallback);
-            // }
-
-            function successCallback(res) {
-                $state.go('information.view', {
-                    informationId: res._id
-                });
-            }
-
-            function errorCallback(res) {
-                vm.error = res.data.message;
-            }
+            vm.buildPager = function () {
+              vm.pagedItems = [];
+              vm.itemsPerPage = 5;
+              vm.currentPage = 1;
+              vm.figureOutItemsToDisplay();
+          };
+          vm.figureOutItemsToDisplay = function () {
+              vm.filteredItems = $filter('filter')(vm.information, {
+                $: vm.search
+            });
+              vm.filterLength = vm.filteredItems.length;
+              var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+              var end = begin + vm.itemsPerPage;
+              vm.pagedItems = vm.filteredItems.slice(begin, end);
+          };
+          vm.pageChanged = function () {
+              vm.figureOutItemsToDisplay();
+          };
+          if(vm.information){
+            vm.buildPager();
         }
+
     }
+}
 )();

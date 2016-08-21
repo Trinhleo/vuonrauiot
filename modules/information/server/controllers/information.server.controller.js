@@ -82,35 +82,28 @@
  * List of Information
  */
  exports.list = function(req, res) { 
-  Information.aggregate([ {
-    $match: {
-      isDeleted: false
-    }
-  },{
-    $group: {
-      _id: '$vegetable',
-      count: {
-        $sum: 1
+  Information.aggregate([
+    {$match : {isDeleted : false}},
+    {
+      $group:{
+        _id: '$vegetable',
+        count: {$sum: 1},
+        vegetable: {$first:'$vegetable'}
       }
-    }
-  }]).exec(function(err, results) {
-    console.log(results);
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+    }],
+    function(err,results) {
+      Information.populate( results, { "path": "vegetable" }, function(err,results) {
+        if (err) {
+          return res.status(400).send({
+            message: 'Thông tin không hợp lệ'
+          });
+        } else {
+          console.log( JSON.stringify( results, undefined, 4 ) );
+          console.log('good');
+          res.jsonp(results);
+        }
       });
-    }
-    Information.populate(results, {path:'name'}, function(err, populatedResults) {
-      if(err) {
-       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-     }
-     else {
-      res.jsonp(populatedResults);
-    }
-  });
-  });
+    });
 };
 
 
@@ -138,7 +131,7 @@
   }
   var vegetableId =  mongoose.Types.ObjectId(id);
   console.log(vegetableId);
-  Information.find({vegetable:vegetableId}).populate('vegetable','name imgUrl').exec(function (err, information) {
+  Information.find({vegetable:vegetableId}).populate('garden').populate('vegetable').exec(function (err, information) {
     if (err) {
       return next(err);
     } else if (!information) {
@@ -150,7 +143,11 @@
       // for(var x in information){
       //   if (information[x].vegetableName.)
       //   information[x]
-
+      for(var x in information){
+       var seasonName = information[x].name.slice(25);
+       information[x].name = seasonName;
+       delete  information[x].isDeleted;
+     }
       // }
       req.list = information;
       next();

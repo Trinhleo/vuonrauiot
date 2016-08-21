@@ -9,14 +9,12 @@
   </md-input-container>
   <md-divider style="margin-bottom:30px;"></md-divider>
   <md-card  data-ng-repeat="information in vm.pagedItems" layout-align="center center">
-  <a data-ui-sref="information.view({ informationId: information._id[0]._id })">
-    <h4 style="color:green" class="text-center">{{information._id[0].name}}</h4>
-  <!-- <small class="list-group-item-text">
-    Ngày thu hoạch:
-    <span data-ng-bind="information.endDate | date:'short'"></span>
-    <span ng-show="information.status!=2">(Dự kiến)</span>
-  </small> -->
-  <div class="img_container"><img alt="" class="img-responsive" ng-src="{{information._id[0].imgUrl}}" /></div>
+  <a data-ui-sref="information.view({ informationId: information._id })">
+    <h4 style="color:green" class="text-center">{{information.vegetable.name}}</h4>
+  <small class="list-group-item-text">
+    <span>Số vườn canh tác: {{information.count}}</span>
+  </small>
+  <div class="img_container"><img alt="" class="img-responsive" ng-src="{{information.vegetable.imgUrl}}" /></div>
 </a>
 </md-card>
 

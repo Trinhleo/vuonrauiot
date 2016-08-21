@@ -15,16 +15,31 @@
  */
  exports.create = function(req, res) {
   var garden = new Garden(req.body);
-  garden.user = req.user;
-  garden.save(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(garden);
-    }
-  });
+ //  for (var x in garden.vegetableList){
+ //    if(garden.vegetableList[x].name){
+ //     delete garden.vegetableList[x].name;
+ //   }
+ //   if(garden.vegetableList[x].created){
+ //     delete garden.vegetableList[x].created;
+ //   }
+ //   if(garden.vegetableList[x].imgUrl){
+ //     delete garden.vegetableList[x].imgUrl;
+ //   }
+ //   if(garden.vegetableList[x]._v){
+ //     delete garden.vegetableList[x]._v;
+ //   }
+ // }
+ console.log(garden);
+ garden.user = req.user;
+ garden.save(function(err) {
+  if (err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  } else {
+    res.jsonp(garden);
+  }
+});
 
 };
 
@@ -54,17 +69,31 @@
   var garden = req.garden ;
   var dbmanage = req.garden
   garden = _.extend(garden , req.body);
-  garden.isEdited = true;
-  garden.editDate = new Date();
-  garden.save(function(err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(garden);
-    }
-  })
+ //  for (var x in garden.vegetableList){
+ //    if(garden.vegetableList[x].name){
+ //     delete garden.vegetableList[x].name;
+ //   }
+ //   if(garden.vegetableList[x].created){
+ //     delete garden.vegetableList[x].created;
+ //   }
+ //   if(garden.vegetableList[x].imgUrl){
+ //     delete garden.vegetableList[x].imgUrl;
+ //   }
+ //   if(garden.vegetableList[x]._v){
+ //     delete garden.vegetableList[x]._v;
+ //   }
+ // }
+ garden.isEdited = true;
+ garden.editDate = new Date();
+ garden.save(function(err) {
+  if (err) {
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+  } else {
+    res.jsonp(garden);
+  }
+})
 };
 
 /**
@@ -102,7 +131,7 @@
     }
   });
 
-    Garden.find({isDeleted: false}).sort('-user').populate('user', 'displayName').exec(function(err, gardens) {
+    Garden.find({isDeleted: false}).sort('-user').populate('user', 'displayName').populate('vegetableList').exec(function(err, gardens) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
@@ -124,7 +153,7 @@
     var ss = [];
     var gd = [];
     console.log(currentUserId);
-    Garden.find({user:{_id:currentUserId}}).sort('-created').populate('user', 'displayName').exec(function(err, gardens){
+    Garden.find({user:{_id:currentUserId}}).sort('-created').populate('vegetableList').exec(function(err, gardens){
      if (err) {
        return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -200,7 +229,7 @@ exports.approveGarden = function(req, res) {
   GardenSeason.find({garden:id,isDeleted: false}).populate('garden','name').exec(function (err,ss){  
     seasons = ss;
   });
-  Garden.findById(id).populate('user', 'displayName').exec(function (err, garden) {
+  Garden.findById(id).populate('user', 'displayName').populate('vegetableList').exec(function (err, garden) {
     if (err) {
       return next(err);
     } else if (!garden||garden.isDeleted) {

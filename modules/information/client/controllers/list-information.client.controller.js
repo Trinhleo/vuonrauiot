@@ -12,6 +12,7 @@
     InformationService.query(function (data) {
       vm.information = data;
       vm.buildPager();
+      console.log( vm.information);
     });
     vm.buildPager = function () {
       vm.pagedItems = [];

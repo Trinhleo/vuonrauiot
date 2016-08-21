@@ -45,25 +45,23 @@
     type: Schema.ObjectId,
     ref: 'User'
   },
-  vegetableList: {
-    type: Array,
-    items: {
-      type: Object
+  vegetableList: 
+  [{
+    type: Schema.ObjectId,
+    ref: 'Vegetablecat'}],
+    isDeleted : {
+      type: Boolean,
+      default: false
+    },
+    deleteDate : {
+      type : Date
+    },
+    isEdited: {
+      type: Boolean,
+      default : false
+    },
+    editDate: {
+      type : Date
     }
-  },
-  isDeleted : {
-    type: Boolean,
-    default: false
-  },
-  deleteDate : {
-    type : Date
-  },
-  isEdited: {
-    type: Boolean,
-    default : false
-  },
-  editDate: {
-    type : Date
-  }
-});
+  });
  mongoose.model('Garden', GardenSchema);
