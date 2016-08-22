@@ -11,7 +11,7 @@
        <li><a data-ui-sref="gardens.list">Quản lý sản xuất</a></li>
        <li class = "active">Chi tiết vườn rau</li></ol>
      </div>
-     <div class=" col-md-offset-3 col-md-6 ">
+     <div class="">
        <span class="alert alert-danger" ng-show="!vm.garden.approved">
          <strong>Chưa được duyệt! </strong>
          <button data-toggle="tooltip" title="Duyệt" class="btn btn-primary"
@@ -24,7 +24,7 @@
       ng-click="vm.approve()" ng-if="vm.garden.isAdmin">
       <i class="glyphicon glyphicon-remove"></i> </button> </span>
     </div>
-    <div class=" col-md-offset-3 col-md-6 ">
+    <div class="">
       <h1 data-ng-bind="vm.garden.name"></h1>
       <h3>Địa Chỉ:<span data-ng-bind="vm.garden.address"></span></h3>
       <h3>Diện tích: {{vm.garden.area}}<small> m<sup>2</sup></small></h3>
@@ -39,7 +39,7 @@
           </em></small><img alt="" class="img-responsive text-center" ng-src="{{vm.garden.imgUrl}}" />
         </div>
       </div>
-      <md-tabs md-dynamic-height md-border-bottom class=" col-md-offset-3 col-md-6 ">
+      <md-tabs md-dynamic-height md-border-bottom class="col-md-12">
       <md-tab label="Chi tiết vườn rau">
       <div>
         <div class="pull-right" data-ng-show="vm.garden.isAllow">

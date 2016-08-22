@@ -8,20 +8,20 @@
        <li class ="active">Chi tiết mùa vụ</li>
      </ol>
    </div>
-   <div class=" col-md-offset-3 col-md-6"
+   <div class=" col-md-12"
    data-ng-show="vm.season.isAdmin">
    <a class="btn btn-primary"
    data-ui-sref="seasons.edit({ seasonId: vm.season._id })">
    <i class="glyphicon glyphicon-edit"></i></a>
    <a class="btn btn-primary" data-ng-click="vm.remove()"><i class="glyphicon glyphicon-trash"></i></a>
  </div>
- <div class=" col-md-offset-3 col-md-6">
+ <div class="col-md-12">
    <h2 > Vườn rau: {{vm.season.garden.name}}</h2> 
      <h2 > Mùa vụ : {{vm.season.name}}</h2>
    </div>
  </div>
 </div>
-<div  class=" col-md-offset-3 col-md-6 ">
+<div  class="col-md-12 ">
   <h2><span style="color:#337ab7">Đối tượng sản xuất:</span> {{vm.season.vegetable.name}}</h2>
   <div class="img_container"><img alt="" class="img-responsive text-center" ng-src="{{vm.season.vegetable.imgUrl}}" /></div>
   <h3><span style="color:#337ab7">Ngày bắt đầu: </span>{{vm.season.startDate| date:'short'}} <br>
